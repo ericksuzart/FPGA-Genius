@@ -1,6 +1,6 @@
-import sys
-import os
 import intelhex
+import os
+import sys
 
 
 def read_bmp_as_hex(file_path):
@@ -40,26 +40,28 @@ def usage():
     print("<word_size> is the number of bytes per line in the output hex file")
     print("The output hex file will be named <file_path>.hex")
 
-if len(sys.argv) != 3:
-    print("Error: Invalid number of arguments")
-    usage()
-    sys.exit(1)
 
-if not sys.argv[2].isdigit() or int(sys.argv[2]) == 0:
-    print("Error: Word size must be an integer greater than 0")
+if len(sys.argv) != 3:
     usage()
-    sys.exit(1)
+    raise ValueError("Error: Invalid number of arguments")
+
+
+try:
+    word_size = int(sys.argv[2])
+    if word_size <= 0:
+        raise ValueError("Error: Word size must be an integer greater than 0")
+except ValueError:
+    usage()
+    raise ValueError("Error: Word size must be an integer greater than 0")
+
 
 bmp_file_path = sys.argv[1]
-word_size = int(sys.argv[2])
 
 if not os.path.exists(bmp_file_path):
-    print("Error: File does not exist")
-    sys.exit(1)
+    raise FileNotFoundError(f"Error: File does not exist: {bmp_file_path}")
 
 if not bmp_file_path.endswith(".bmp"):
-    print("Error: File is not a .bmp file")
-    sys.exit(1)
+    raise ValueError(f"Error: File is not a .bmp file: {bmp_file_path}")
 
 
 print(f"Reading {bmp_file_path}")
