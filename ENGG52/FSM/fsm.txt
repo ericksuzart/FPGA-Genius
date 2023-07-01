@@ -1,0 +1,108 @@
+module fsm(clk, clk_m, enable, data_in, rgb, rst);
+	input enable, clk, rst;
+	input [47:0] data_in;
+	output reg clk_m;
+	output wire [23:0] rgb;
+	
+	reg [47:0] P, tmp;
+   reg [15:0] addr;
+	
+	parameter INICIO 		 = 3'b001;
+	parameter PREPARAR 	 = 3'b010;
+	parameter ATIVAR 		 = 3'b011;
+	parameter SUSPENDER   = 3'b100;
+	parameter LER 			 = 3'b101;
+	parameter INCREMENTAR = 3'b110;
+	
+	// Endereço máximo de memória
+	parameter MAX = 64800;  // 65536
+	reg [2:0] estado_atual, estado_futuro;
+	
+	// Gerenciamento do estado futuro
+	always @(*) begin
+		case (estado_atual)
+			INICIO:
+			begin
+				if(rst)
+                estado_futuro = INICIO;
+            else
+                estado_futuro = PREPARAR;
+			end
+			PREPARAR:
+			begin
+				if (addr == MAX)
+					estado_futuro = INICIO;
+				else
+					estado_futuro = ATIVAR;
+			end
+			ATIVAR:
+			begin
+				if (enable == 0)
+					estado_futuro = SUSPENDER;
+				else if (enable == 1)
+					estado_futuro = LER;
+			end
+			SUSPENDER:
+			begin
+				if (enable == 0)
+					estado_futuro = SUSPENDER;
+				else if (enable == 1)
+					estado_futuro = LER;		
+			end		
+			LER:
+				estado_futuro = INCREMENTAR;
+			INCREMENTAR:
+				estado_futuro = PREPARAR;
+			default:
+            estado_futuro = INICIO;
+		endcase
+	end
+	
+	always @(posedge clk) begin
+		if (rst) begin
+			estado_atual <= INICIO;
+			addr <= 0;
+		end
+		
+		else begin
+			estado_atual <= estado_futuro;
+			
+			if (estado_futuro == INCREMENTAR) begin
+				addr <= addr + 1;
+			end
+		end
+	end
+	
+	always @(*) begin
+		clk_m = 0;
+		
+		case (estado_atual)
+			INICIO:
+			begin
+				P = 0;
+				tmp = 0;
+			end
+			PREPARAR:
+				tmp = P[23:0];
+			ATIVAR:
+				clk_m = 1;
+			SUSPENDER:
+				P = data_in;
+			LER:
+			begin
+				P = data_in;
+				tmp = data_in[47:24];
+			end
+			INCREMENTAR:
+				P = data_in;
+			default:
+			begin
+				P = 0;
+				tmp = 0;
+			end
+		endcase
+	end
+	
+	assign rgb = (enable)? tmp : 0;
+	
+endmodule
