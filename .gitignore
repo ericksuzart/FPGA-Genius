@@ -53,6 +53,7 @@
 !*.tbd
 !*.sof
 !*.bmp
+!*.sh
 ## tbd
 
 !*.tcl

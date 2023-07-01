@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
+# PYTHON_ARGCOMPLETE_OK
+
 import argparse
+import argcomplete
 import intelhex
 import os
 import sys
@@ -112,6 +115,7 @@ def main():
                         help="Width of the BMP image")
     parser.add_argument("--height", type=int, default=360,
                         help="Height of the BMP image")
+    argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
     for bmp_file_path in args.bmp_files:
