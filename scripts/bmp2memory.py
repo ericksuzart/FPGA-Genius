@@ -30,8 +30,28 @@ def write_hex_list_to_hex_file(hex_list, file_path, word_size):
         line = ''.join(hex_list[i:i + word_size])
         ih.puts(i, bytes.fromhex(line))
 
-    ih.write_hex_file(file_path, byte_count=word_size)
+    ih.write_hex_file(file_path, byte_count=word_size, write_start_addr=False)
 
+
+def read_hex_file(file_path):
+    '''Read an Intel HEX file line by line in a list'''
+    with open(file_path, 'r') as file:
+        hex_list = [line.strip() for line in file]
+    return hex_list
+
+
+def crop_hex_list2_size(hex_list, size):
+    '''Crop the hex list to a given size'''
+    # remove the first line
+    hex_list = hex_list[1:size + 1]
+    return hex_list[:size + 1]
+
+
+def write_to_file(hex_list, file_path):
+    '''Write the hex list to a file'''
+    with open(file_path, 'w') as file:
+        for line in hex_list:
+            file.write(line + '\n')
 
 def usage():
     print("Usage: python bmp2memory.py <file_path> <word_size:int>")
@@ -72,3 +92,10 @@ print(f"Converting from BGR to RGB values from {bmp_file_path}")
 hex_list = convert_bgr_to_rgb(hex_list)
 print(f"Writing the RGB bitmap to {bmp_file_path}.hex")
 write_hex_list_to_hex_file(hex_list, bmp_file_path + ".hex", word_size)
+print(f"Reading {bmp_file_path}.hex to crop it to the correct size")
+hex_list = read_hex_file(bmp_file_path + ".hex")
+print(f"Cropping {bmp_file_path}.hex to the correct size")
+hex_list = crop_hex_list2_size(hex_list, 360 * 360 * 3 // word_size)
+print(f"Writing the cropped {bmp_file_path}.hex to {bmp_file_path}.hex")
+write_to_file(hex_list, bmp_file_path + ".hex")
+print("Done")
