@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import intelhex
 import os
 import sys
@@ -15,9 +16,9 @@ def read_bmp_as_hex(file_path):
         return [hex(byte)[2:].zfill(2) for byte in file.read()]
 
 
-def top_to_bottom_bmp(hex_list):
+def convert_bmp_from_bottom_to_top(hex_list):
     '''
-    Convert the BMP from bottom->top to top->bottom cause the BMP is stored
+    Convert the BMP from bottom->top to top->bottom because the BMP is stored
     from bottom->top, so we need to reverse it. The output is already in RGB
     '''
     hex_list.reverse()
@@ -39,7 +40,7 @@ def write_hex_list_to_hex_file(hex_list, file_path, word_size):
 
 def read_hex_file(file_path):
     '''
-    Read an Intel HEX file line by line in a list
+    Read an Intel HEX file line by line into a list
     '''
     with open(file_path, 'r') as file:
         return [line.strip() for line in file]
@@ -53,27 +54,15 @@ def crop_hex_list_to_size(hex_list, size):
     return hex_list[1:size + 1]
 
 
-def write_to_file(hex_list, file_path):
+def write_list_to_file(lst, file_path):
     '''
-    Write the hex list to a file
+    Write the list to a file
     '''
     with open(file_path, 'w') as file:
-        file.write('\n'.join(hex_list))
+        file.write('\n'.join(lst))
 
 
-def usage():
-    print(f"{Style.BRIGHT}Usage: python bmp2memory.py <f1_path> <f2_path>" +
-          " ... <fn_path> <word_size:int>")
-    print("Example: python bmp2memory.py image.bmp 6")
-    print("<f_path> is the path to the .bmp file(s)")
-    print("<word_size> is the number of bytes per line in the output hex file")
-    print("The output will be memory hex files with the same name as the" +
-          " input BMP files but with the .hex extension.")
-    print(f"{Style.BRIGHT}Note: The BMP file(s) must be 360x360 pixels and" +
-          " have 24 bits per pixel.")
-
-
-def process_bmp_file(bmp_file_path, word_size):
+def process_bmp_file(bmp_file_path, word_size=6, width=360, height=360):
     if not os.path.exists(bmp_file_path):
         raise FileNotFoundError(
             f"{Fore.RED}Error: File does not exist: {bmp_file_path}")
@@ -86,45 +75,41 @@ def process_bmp_file(bmp_file_path, word_size):
     hex_list = read_bmp_as_hex(bmp_file_path)
     print(f"{Fore.YELLOW}Converting from bottom->top to top->bottom" +
           f" from {bmp_file_path}")
-    hex_list = top_to_bottom_bmp(hex_list)
+    hex_list = convert_bmp_from_bottom_to_top(hex_list)
 
     hex_file_path = bmp_file_path + ".hex"
     print(f"{Fore.YELLOW}Writing the RGB bitmap to {hex_file_path}")
     write_hex_list_to_hex_file(hex_list, hex_file_path, word_size)
     print(f"{Fore.YELLOW}Reading {hex_file_path} to crop it to the" +
-          " correct size")
+          f" correct size")
     hex_list = read_hex_file(hex_file_path)
     print(f"{Fore.YELLOW}Cropping {hex_file_path} to the correct size")
-    hex_list = crop_hex_list_to_size(hex_list, 360 * 360 * 3 // word_size)
+    hex_list = crop_hex_list_to_size(hex_list, width * height * 3 // word_size)
     print(f"{Fore.YELLOW}Writing the cropped {hex_file_path} to" +
           f" {hex_file_path}")
-    write_to_file(hex_list, hex_file_path)
+    write_list_to_file(hex_list, hex_file_path)
     print(f"{Fore.GREEN}Done for {bmp_file_path}")
 
 
 def main():
-    if len(sys.argv) == 1 or sys.argv[1] == "-h" or sys.argv[1] == "--help":
-        usage()
-        return
+    parser = argparse.ArgumentParser(
+        description="Convert BMP files to memory hex files.")
+    parser.add_argument("bmp_files", metavar="file",
+                        nargs="+", help="BMP file(s) to process")
+    parser.add_argument("--word_size", type=int, default=6,
+                        help="Number of bytes per line in the output hex" +
+                        " file, default is 6 (or 2 pixels)")
+    parser.add_argument("--width", type=int, default=360,
+                        help="Width of the BMP image")
+    parser.add_argument("--height", type=int, default=360,
+                        help="Height of the BMP image")
+    args = parser.parse_args()
 
-    if len(sys.argv) < 3:
-        usage()
-        raise ValueError(f"{Fore.RED}Error: Invalid number of arguments")
-
-    try:
-        word_size = int(sys.argv[-1])
-        if word_size <= 0:
-            raise ValueError(
-                f"{Fore.RED}Error: Word size must be greater than zero")
-    except ValueError:
-        usage()
-        raise ValueError(
-            f"{Fore.RED}Error: Word size must be greater than zero")
-
-    bmp_file_paths = sys.argv[1:-1]
-
-    for bmp_file_path in bmp_file_paths:
-        process_bmp_file(bmp_file_path, word_size)
+    for bmp_file_path in args.bmp_files:
+        process_bmp_file(bmp_file_path,
+                         args.word_size,
+                         args.width,
+                         args.height)
 
 
 if __name__ == "__main__":
