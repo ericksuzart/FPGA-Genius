@@ -63,6 +63,15 @@ def write_list_to_file(lst, file_path):
 
 
 def process_bmp_file(bmp_file_path, word_size=6, width=360, height=360):
+    '''
+    Process a BMP file to convert it to a memory hex file with the given word
+    size (number of bytes per line, default is 6) and the given width and
+    height of the BMP image (default is 360x360) and write it to a file with
+    the same name as the BMP file but with the .hex extension (e.g. image.bmp
+    -> image.bmp.hex) and crop it to the correct size (width * height * 3 //
+    word_size) removing the first line, which is the start address of the Intel
+    HEX file (e.g. 0x00000000)
+    '''
     if not os.path.exists(bmp_file_path):
         raise FileNotFoundError(
             f"{Fore.RED}Error: File does not exist: {bmp_file_path}")
