@@ -59,7 +59,7 @@ def write_to_file(hex_list, file_path):
 
 
 def usage():
-    print("Usage: python bmp2memory.py <file_path> <word_size:int>")
+    print("Usage: python bmp2memory.py <file_path> ... <word_size:int>")
     print("Example: python bmp2memory.py image.bmp 6")
     print("<file_path> is the path to the .bmp file")
     print("<word_size> is the number of bytes per line in the output hex file")
@@ -68,22 +68,7 @@ def usage():
     print("OBS: the BMP file must be 360x360 pixels and 24 bits per pixel")
 
 
-def main():
-    if len(sys.argv) != 3:
-        usage()
-        raise ValueError("Error: Invalid number of arguments")
-
-    try:
-        word_size = int(sys.argv[2])
-        if word_size <= 0:
-            raise ValueError(
-                "Error: Word size must be an integer greater than 0")
-    except ValueError:
-        usage()
-        raise ValueError("Error: Word size must be an integer greater than 0")
-
-    bmp_file_path = sys.argv[1]
-
+def process_bmp_file(bmp_file_path, word_size):
     if not os.path.exists(bmp_file_path):
         raise FileNotFoundError(f"Error: File does not exist: {bmp_file_path}")
 
@@ -104,7 +89,27 @@ def main():
     hex_list = crop_hex_list_to_size(hex_list, 360 * 360 * 3 // word_size)
     print(f"Writing the cropped {hex_file_path} to {hex_file_path}")
     write_to_file(hex_list, hex_file_path)
-    print("Done")
+    print(f"Done for {bmp_file_path}")
+
+
+def main():
+    if len(sys.argv) < 3:
+        usage()
+        raise ValueError("Error: Invalid number of arguments")
+
+    try:
+        word_size = int(sys.argv[-1])
+        if word_size <= 0:
+            raise ValueError(
+                "Error: Word size must be an integer greater than 0")
+    except ValueError:
+        usage()
+        raise ValueError("Error: Word size must be an integer greater than 0")
+
+    bmp_file_paths = sys.argv[1:-1]
+
+    for bmp_file_path in bmp_file_paths:
+        process_bmp_file(bmp_file_path, word_size)
 
 
 if __name__ == "__main__":
