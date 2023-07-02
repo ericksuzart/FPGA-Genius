@@ -83,6 +83,13 @@ def process_bmp_file(bmp_file_path, word_size=6, width=360, height=360):
         raise ValueError(
             f"{Fore.RED}Error: File is not a .bmp file: {bmp_file_path}")
 
+    # Cyclone® IV EP4CE115: 3888 kbits × 1024 ÷ 8 = 497664 bytes
+    mem_max_size = 497664
+
+    if width * height * 3 > mem_max_size:
+        raise ValueError(
+            f"{Fore.RED}Error: Image is too big for memory: {bmp_file_path}")
+
     print(f"{Fore.YELLOW}Reading {bmp_file_path}")
     hex_list = read_bmp_as_hex(bmp_file_path)
     print(f"{Fore.YELLOW}Converting from bottom->top to top->bottom" +
