@@ -5,7 +5,11 @@
 **/incremental_db/**
 **/*_tmp/**
 **/output_files/**
+**/simulation/**
 
 # files
 *.bak
 *.hex
+*.summary
+*.log
+*.rpt
