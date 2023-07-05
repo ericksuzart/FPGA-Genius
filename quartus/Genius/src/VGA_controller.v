@@ -96,11 +96,14 @@ assign VGA_VS = (v_c >= V_FPORCH && v_c < V_FPORCH + V_SYNC)? 0:1;
 // Generate inactive video signal (active low), blanking the screen.
 assign VGA_BLANK_N = (h_c >= H_OFF && v_c >= V_OFF)? 1:0;
 
-assign DISP_EN = (h_c >= G_X + H_OFF && h_c < G_X + H_OFF + G_HS && v_c >= G_Y + V_OFF && v_c < G_Y + V_OFF + G_VS)? 1:0;
+assign DISP_EN = (h_c >= G_X + H_OFF && 
+                  h_c < G_X + H_OFF + G_HS &&
+                  v_c >= G_Y + V_OFF &&
+                  v_c < G_Y + V_OFF + G_VS)? 1:0;
 
-assign VGA_R = (DISP_EN)? 255 : 0;
-assign VGA_G = (DISP_EN)?   0 : 0;
-assign VGA_B = (DISP_EN)?   0 : 255;
+assign VGA_R = (DISP_EN)?  RGB[23:16] : 0;
+assign VGA_G = (DISP_EN)?  RGB[15:8]  : 0;
+assign VGA_B = (DISP_EN)?  RGB[7:0]   : 0;
 
 
 endmodule
