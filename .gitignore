@@ -13,3 +13,8 @@
 *.summary
 *.log
 *.rpt
+
+#  Modelsim files
+*.wlf
+*.mti
+transcript
