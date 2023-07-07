@@ -17,6 +17,7 @@
 // CREATED		"Thu Jul  6 21:43:31 2023"
 
 module Genius_top_level(
+	CLOCK_25,
 	CLOCK_50,
 	wren,
 	data,
@@ -33,6 +34,7 @@ module Genius_top_level(
 );
 
 
+input wire	CLOCK_25;
 input wire	CLOCK_50;
 input wire	wren;
 input wire	[47:0] data;
@@ -47,7 +49,6 @@ output wire	[7:0] VGA_B;
 output wire	[7:0] VGA_G;
 output wire	[7:0] VGA_R;
 
-wire	SYNTHESIZED_WIRE_0;
 wire	[23:0] SYNTHESIZED_WIRE_1;
 wire	SYNTHESIZED_WIRE_2;
 wire	[47:0] SYNTHESIZED_WIRE_3;
@@ -55,13 +56,13 @@ wire	SYNTHESIZED_WIRE_4;
 wire	[4:0] SYNTHESIZED_WIRE_5;
 
 assign	DISP_EN = SYNTHESIZED_WIRE_2;
-assign	VGA_CLK = SYNTHESIZED_WIRE_0;
+assign	VGA_CLK = CLOCK_25;
 
 
 
 
 VGA_controller	b2v_inst(
-	.VGA_CLK(SYNTHESIZED_WIRE_0),
+	.VGA_CLK(CLOCK_25),
 	.RESET(SW),
 	.RGB(SYNTHESIZED_WIRE_1),
 	.VGA_HS(VGA_HS),
@@ -83,12 +84,6 @@ VGA_controller	b2v_inst(
 	defparam	b2v_inst.V_DISP = 480;
 	defparam	b2v_inst.V_FPORCH = 11;
 	defparam	b2v_inst.V_SYNC = 2;
-
-
-PLL	b2v_inst1(
-	.inclk0(CLOCK_50),
-	.c0(SYNTHESIZED_WIRE_0),
-	.c1(c1));
 
 
 pixel_loader	b2v_inst2(

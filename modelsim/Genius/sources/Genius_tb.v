@@ -2,6 +2,7 @@
 module Genius_top_level_tb;
 
   // Inputs
+  reg CLOCK_25;
   reg CLOCK_50;
   reg wren;
   reg [47:0] data;
@@ -20,6 +21,7 @@ module Genius_top_level_tb;
 
   // Instantiate the module under test
   Genius_top_level dut (
+    .CLOCK_25(CLOCK_25),
     .CLOCK_50(CLOCK_50),
     .wren(wren),
     .data(data),
@@ -36,11 +38,13 @@ module Genius_top_level_tb;
   );
   // Clock generation
   always #5 CLOCK_50 = ~CLOCK_50;
+  always #10 CLOCK_25 = ~CLOCK_25;
 
   // Initialize inputs
   initial begin
     // $monitor("tempo = %t clock = %b reset = %b wren = %b clock_ram = %b clock_rom = %b a_ram = %d a_rom = %d i = %d q_ram = %d q_rom = %d", $time, clock, reset, wren, clock_ram, clock_rom, a_ram, a_rom, i, q_ram, q_rom);
     $monitor("time = %t, clk= %b, HS= %b, VS= %b, DISP_EN= %b, R= %b, G= %b, B= %b", $time, VGA_CLK, VGA_HS, VGA_VS, DISP_EN, VGA_R, VGA_G, VGA_B);
+    CLOCK_25 = 0;
     CLOCK_50 = 0;
     wren = 0;
     data = 0;
@@ -48,7 +52,7 @@ module Genius_top_level_tb;
     #10; // Wait for a few clock cycles before applying inputs
     #50 SW[0] = 1; //reset 
     #100 SW[0] = 0; // reset
-    #60000 $stop; // End the simulation
+    // #60000 $stop; // End the simulation
   end
 
 endmodule

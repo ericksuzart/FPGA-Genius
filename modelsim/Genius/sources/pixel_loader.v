@@ -94,8 +94,7 @@ always @(*)
 begin
     // State outputs
     MEM_CLK = 0;
-    P = 0;
-    tmp = 0;
+
     case (A_State)
         INICIO:
         begin

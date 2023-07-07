@@ -17,4 +17,5 @@
 #  Modelsim files
 *.wlf
 *.mti
+**/work/**
 transcript
