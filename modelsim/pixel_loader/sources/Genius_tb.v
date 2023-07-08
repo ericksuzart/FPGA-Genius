@@ -18,6 +18,12 @@ module Genius_top_level_tb;
   wire [7:0] VGA_B;
   wire [7:0] VGA_G;
   wire [7:0] VGA_R;
+  wire MEM_CLK;
+  wire [23:0] RGB;
+
+  // Test variables
+  reg [10:0] Memory; // 2^11 = 2048 values
+  integer hash;
 
   // Instantiate the module under test
   Genius_top_level dut (
@@ -34,7 +40,9 @@ module Genius_top_level_tb;
     .c1(c1),
     .VGA_B(VGA_B),
     .VGA_G(VGA_G),
-    .VGA_R(VGA_R)
+    .VGA_R(VGA_R),
+    .MEM_CLK(MEM_CLK),
+    .RGB(RGB)
   );
   // Clock generation
   always #5 CLOCK_50 = ~CLOCK_50;
@@ -42,17 +50,42 @@ module Genius_top_level_tb;
 
   // Initialize inputs
   initial begin
-    // $monitor("tempo = %t clock = %b reset = %b wren = %b clock_ram = %b clock_rom = %b a_ram = %d a_rom = %d i = %d q_ram = %d q_rom = %d", $time, clock, reset, wren, clock_ram, clock_rom, a_ram, a_rom, i, q_ram, q_rom);
-    $monitor("time = %t, clk= %b, HS= %b, VS= %b, DISP_EN= %b, R= %b, G= %b, B= %b", $time, VGA_CLK, VGA_HS, VGA_VS, DISP_EN, VGA_R, VGA_G, VGA_B);
     CLOCK_25 = 0;
     CLOCK_50 = 0;
     wren = 0;
     data = 0;
     SW = 0;
+    hash = 0;
     #10; // Wait for a few clock cycles before applying inputs
     #50 SW[0] = 1; //reset 
     #100 SW[0] = 0; // reset
-    // #60000 $stop; // End the simulation
+    CheckHash();
+
+    // 402652140 is the hash of the image in the memory
+    if (hash != 402652140)
+      $display("Test failed: expected hash = 402652140, actual hash = %d", hash);
+    else
+      $display("Test passed, module works as expected");
+
+    #100 $stop;
   end
+
+  task CheckHash;
+    begin
+      # 150 // Wait for the output to settle
+      @(posedge DISP_EN)
+      begin
+        repeat (64)
+        begin
+          # 20;
+          hash = hash + RGB;
+          // print(f"{RGB} ({int(RGB, 16)}) \t-> {hash}")
+          $display("%h (%d) -> %d", RGB, RGB, hash);
+        end
+
+        # 100;
+      end
+    end
+  endtask
 
 endmodule
