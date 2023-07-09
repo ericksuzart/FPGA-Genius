@@ -39,7 +39,7 @@ module Genius_top_level(
 input wire  CLOCK_25;
 input wire  CLOCK_50;
 input wire  wren;
-input wire  [47:0] data;
+input wire  [23:0] data;
 input wire  [0:0] SW;
 output wire VGA_HS;
 output wire VGA_VS;
@@ -54,8 +54,9 @@ output wire MEM_CLK;
 output wire  [23:0] RGB;
 
 wire  SYNTHESIZED_WIRE_2;
-wire  [47:0] SYNTHESIZED_WIRE_3;
-wire  [4:0] SYNTHESIZED_WIRE_5;
+wire  [47:0] rgb_out;
+wire  [23:0] mem_out;
+wire  [3:0] mem_addr;
 
 assign  DISP_EN = SYNTHESIZED_WIRE_2;
 assign  VGA_CLK = CLOCK_25;
@@ -90,15 +91,15 @@ pixel_loader  b2v_inst2(
   .CLK(CLOCK_50),
   .RESET(SW),
   .INTERFACE_EN(SYNTHESIZED_WIRE_2),
-  .DATA_IN(SYNTHESIZED_WIRE_3),
+  .DATA_IN(rgb_out),
   .MEM_CLK(MEM_CLK),
-  .MEM_ADDR(SYNTHESIZED_WIRE_5),
+  .MEM_ADDR(mem_addr),
   .RGB(RGB));
   defparam  b2v_inst2.ATIVAR = 2;
   defparam  b2v_inst2.INCREMENTAR = 5;
   defparam  b2v_inst2.INICIO = 0;
   defparam  b2v_inst2.LER = 4;
-  defparam  b2v_inst2.MAX_ADDR = 64800;
+  defparam  b2v_inst2.MAX_ADDR = 32;
   defparam  b2v_inst2.PREPARAR = 1;
   defparam  b2v_inst2.SUSPENDER = 3;
 
@@ -106,9 +107,12 @@ pixel_loader  b2v_inst2(
 interface_ram b2v_inst3(
   .wren(wren),
   .clock(MEM_CLK),
-  .address(SYNTHESIZED_WIRE_5),
+  .address(mem_addr),
   .data(data),
-  .q(SYNTHESIZED_WIRE_3));
+  .q(mem_out));
 
+rgb_converter b2v_inst4(
+  .rgb_in(mem_out),
+  .rgb_out(rgb_out));
 
 endmodule

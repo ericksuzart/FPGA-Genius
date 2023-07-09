@@ -7,12 +7,12 @@ module pixel_loader
     input INTERFACE_EN,
 
     // ----- Outputs ----
-    output [4:0] MEM_ADDR,
+    output [3:0] MEM_ADDR,
     output reg MEM_CLK,
     output [23:0] RGB
 );
 
-parameter MAX_ADDR = 64800;  // 65536
+parameter MAX_ADDR = 32;  // 65536
 
 reg [47:0] P;  // 48 bits, 2 pixels
 reg [23:0] tmp; // 24 bits, 1 pixel
@@ -21,7 +21,7 @@ reg [23:0] tmp; // 24 bits, 1 pixel
 reg [2:0] A_State, F_State;
 
 // Address holder
-reg [4:0] r_Addr;
+reg [3:0] r_Addr;
 
 // Encoding of states
 parameter INICIO = 0,

@@ -42,27 +42,27 @@ USE altera_mf.altera_mf_components.all;
 ENTITY interface_ram IS
 	PORT
 	(
-		address		: IN STD_LOGIC_VECTOR (4 DOWNTO 0);
+		address		: IN STD_LOGIC_VECTOR (3 DOWNTO 0);
 		clock		: IN STD_LOGIC  := '1';
-		data		: IN STD_LOGIC_VECTOR (47 DOWNTO 0);
+		data		: IN STD_LOGIC_VECTOR (23 DOWNTO 0);
 		wren		: IN STD_LOGIC ;
-		q		: OUT STD_LOGIC_VECTOR (47 DOWNTO 0)
+		q		: OUT STD_LOGIC_VECTOR (23 DOWNTO 0)
 	);
 END interface_ram;
 
 
 ARCHITECTURE SYN OF interface_ram IS
 
-	SIGNAL sub_wire0	: STD_LOGIC_VECTOR (47 DOWNTO 0);
+	SIGNAL sub_wire0	: STD_LOGIC_VECTOR (23 DOWNTO 0);
 
 BEGIN
-	q    <= sub_wire0(47 DOWNTO 0);
+	q    <= sub_wire0(23 DOWNTO 0);
 
 	altsyncram_component : altsyncram
 	GENERIC MAP (
 		clock_enable_input_a => "BYPASS",
 		clock_enable_output_a => "BYPASS",
-		init_file => "/home/erick/shared/FPGA-Genius/modelsim/pixel_loader/media/simple_8x8.bmp.hex",
+		init_file => "/home/erick/shared/FPGA-Genius/modelsim/pixel_loader/media/simple_8x8_4bpp.bmp.hex",
 		intended_device_family => "Cyclone IV E",
 		lpm_hint => "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=RAM",
 		lpm_type => "altsyncram",
@@ -72,8 +72,8 @@ BEGIN
 		outdata_reg_a => "UNREGISTERED",
 		power_up_uninitialized => "FALSE",
 		read_during_write_mode_port_a => "NEW_DATA_NO_NBE_READ",
-		widthad_a => 5,
-		width_a => 48,
+		widthad_a => 4, -- width of the address bus in bits
+		width_a => 24, -- width of the data bus in bits
 		width_byteena_a => 1
 	)
 	PORT MAP (

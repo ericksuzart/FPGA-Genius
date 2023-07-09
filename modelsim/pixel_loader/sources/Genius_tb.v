@@ -1,11 +1,11 @@
 `timescale 1ps/1ps
-module Genius_top_level_tb;
+module Genius_tb;
 
   // Inputs
   reg CLOCK_25;
   reg CLOCK_50;
   reg wren;
-  reg [47:0] data;
+  reg [23:0] data;
   reg [0:0] SW;
 
   // Outputs
