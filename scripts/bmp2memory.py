@@ -8,6 +8,9 @@ import os
 import sys
 from colorama import init, Fore, Style
 
+
+import color_palette as cp  # color palette
+
 init(autoreset=True)
 
 
@@ -19,39 +22,28 @@ def read_bmp_as_hex(file_path):
         return [hex(byte)[2:].zfill(2) for byte in file.read()]
 
 
-def remove_header(hex_list, bpp):
+def remove_header(hex_list, header_size=1078):
     '''
-    Remove the header of the Intel HEX file, which is the first 122 bytes
+    Remove the header of the Intel HEX file, which is the first 1078 bytes
     '''
-    if bpp == 8:
-        hex_list = hex_list[122:]
-    elif bpp == 4:
-        hex_list = hex_list[38:]
-    else:
-        raise ValueError(
-            f"{Fore.RED}Error: Unsupported bits per pixel: {bpp}")
+    hex_list = hex_list[header_size:]
+    # hex_list = hex_list[38:]
+    # 1078 for encoded image
+
     return hex_list
 
 
-def generate_hash(hex_list):
+def generate_hash(encoded_list):
     '''
     Generate a hash of the hex list using pixels as input to further
     verification
     '''
     hash = 0
-    for R, G, B in zip(hex_list[0::3], hex_list[1::3], hex_list[2::3]):
-        RGB = R + G + B
+
+    for code in encoded_list:
+        RGB = cp.colors[code]
         hash += int(RGB, 16)
     return hash
-
-
-def convert_bmp_from_bottom_to_top(hex_list):
-    '''
-    Convert the BMP from bottom->top to top->bottom because the BMP is stored
-    from bottom->top, so we need to reverse it. The output is already in RGB
-    '''
-    hex_list.reverse()
-    return hex_list
 
 
 def write_hex_list_to_hex_file(hex_list, file_path, word_size):
@@ -67,15 +59,14 @@ def write_hex_list_to_hex_file(hex_list, file_path, word_size):
     ih.write_hex_file(file_path, byte_count=word_size, write_start_addr=False)
 
 
-def process_bmp_file(bmp_file_path, word_size=6, width=360, height=360, bpp=8):
+def process_bmp_file(bmp_file_path,
+                     word_size=2,
+                     width=360,
+                     height=360,
+                     output_file_path=None,
+                     header_size=1078):
     '''
-    Process a BMP file to convert it to a memory hex file with the given word
-    size (number of bytes per line, default is 6) and the given width and
-    height of the BMP image (default is 360x360) and write it to a file with
-    the same name as the BMP file but with the .hex extension (e.g. image.bmp
-    -> image.bmp.hex) and crop it to the correct size (width * height * 3 //
-    word_size) removing the first line, which is the start address of the Intel
-    HEX file (e.g. 0x00000000)
+    Process a BMP file to convert it to a memory hex file for the FPGA.
     '''
     if not os.path.exists(bmp_file_path):
         raise FileNotFoundError(
@@ -94,33 +85,36 @@ def process_bmp_file(bmp_file_path, word_size=6, width=360, height=360, bpp=8):
 
     print(f"{Fore.YELLOW}Reading {bmp_file_path}")
     hex_list = read_bmp_as_hex(bmp_file_path)
-    print(f"{Fore.YELLOW}Cropping {bmp_file_path} to the correct size")
-    hex_list = remove_header(hex_list, bpp)
-    print(f"{Fore.YELLOW}Converting from bottom->top to top->bottom" +
-          f" from {bmp_file_path}")
-    hex_list = convert_bmp_from_bottom_to_top(hex_list)
+    print(f"{Fore.YELLOW}Remove {header_size} bytes from {bmp_file_path}")
+    hex_list = remove_header(hex_list, header_size)
     print(f"{Fore.YELLOW}Generating hash of {bmp_file_path}")
-
     hash = generate_hash(hex_list)  # hash sum for verification
 
-    hex_file_path = bmp_file_path + ".hex"
-    print(f"{Fore.YELLOW}Writing the RGB bitmap to {hex_file_path}")
+    if output_file_path is None:
+        hex_file_path = bmp_file_path + ".hex"
+    else:
+        hex_file_path = output_file_path
+
+    print(f"{Fore.YELLOW}Writing the encoded bitmap to {hex_file_path}")
     write_hex_list_to_hex_file(hex_list, hex_file_path, word_size)
 
     print(f"{Fore.GREEN}--------------------------------------------------")
     print(f"{Fore.GREEN}Done for {bmp_file_path}")
     print(f"Statistics:")
 
-    words = width * height * 3 * bpp // (word_size * 8)
-    bits = width * height * 3 * bpp
-    bytes = width * height * 3 * bpp // 8
     pixels = width * height
+    bytes = pixels  # one byte per pixel
+    bits = bytes * 8
+    words = bytes // word_size
+    mem_usage = bytes / mem_max_size * 100
 
     print(f"\t{Fore.LIGHTBLACK_EX}words:{Fore.BLUE}\t{words}")
     print(f"\t{Fore.LIGHTBLACK_EX}bits:{Fore.BLUE}\t{bits}")
     print(f"\t{Fore.LIGHTBLACK_EX}bytes:{Fore.BLUE}\t{bytes}")
     print(f"\t{Fore.LIGHTBLACK_EX}pixels:{Fore.BLUE}\t{pixels}")
     print(f"\t{Fore.LIGHTBLACK_EX}hash:{Fore.BLUE}\t{hash}")
+    print(f"\t{Fore.LIGHTBLACK_EX}memory:{Fore.BLUE}\t{mem_usage:.2f}%" +
+          f" of Cyclone® IV EP4CE115")
     print(f"{Fore.GREEN}--------------------------------------------------")
 
 
@@ -129,15 +123,18 @@ def main():
         description="Convert BMP files to memory hex files.")
     parser.add_argument("bmp_files", metavar="file",
                         nargs="+", help="BMP file(s) to process")
-    parser.add_argument("--word_size", type=int, default=6,
+    parser.add_argument("--word_size", type=int, default=2,
                         help="Number of bytes per line in the output hex" +
-                        " file, default is 6 (or 2 pixels)")
+                        " file, default=6 (or 2 pixels)")
     parser.add_argument("--width", type=int, default=360,
-                        help="Width of the BMP image")
+                        help="Width of the BMP image in pixels, default=360")
     parser.add_argument("--height", type=int, default=360,
-                        help="Height of the BMP image")
-    parser.add_argument("--bpp", type=int, default=8,
-                        help="Bits per pixel of the BMP image")
+                        help="Height of the BMP image in pixels, default=360")
+    parser.add_argument("--output", type=str, default=None,
+                        help="Output hex file path")
+    parser.add_argument("--h_size", type=int, default=1078,
+                        help="Size of the header of the bmp image in " +
+                        "bytes, default=1078")
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
@@ -146,7 +143,8 @@ def main():
                          args.word_size,
                          args.width,
                          args.height,
-                         args.bpp)
+                         args.output,
+                         args.h_size)
 
 
 if __name__ == "__main__":
