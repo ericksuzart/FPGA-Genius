@@ -79,7 +79,7 @@ def process_bmp_file(bmp_file_path,
     # Cyclone® IV EP4CE115: 3888 kbits × 1024 ÷ 8 = 497664 bytes
     mem_max_size = 497664
 
-    if width * height * 3 > mem_max_size:
+    if width * height > mem_max_size:
         raise ValueError(
             f"{Fore.RED}Error: Image is too big for memory: {bmp_file_path}")
 
