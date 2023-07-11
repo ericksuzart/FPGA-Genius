@@ -1,6 +1,6 @@
 // The code essentially acts as a lookup table, where given a specific CODE
 // value, it provides the corresponding RGB value.
-module PixelDecoder
+module pixel_decoder
 (
   input wire [7:0]  CODE,
   output reg [23:0] RGB

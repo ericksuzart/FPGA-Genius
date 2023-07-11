@@ -2,7 +2,7 @@
 // clock signals based on the SELECTOR input. It functions as a demultiplexer
 // for memory locations, allowing the selection of a specific memory location
 // and retrieving the corresponding data from that location.
-module MemoryDemux
+module memory_demux
 (
   input [2:0] SELECTOR,
   input [15:0] IN_ADDR,
@@ -73,58 +73,58 @@ module MemoryDemux
     case (SELECTOR)
       BACKGROUND:
       begin
-        OUT_PX = BACKGROUND_PX;
         BACKGROUND_ADDR = IN_ADDR;
         BACKGROUND_CLK = IN_CLK;
+        OUT_PX = BACKGROUND_PX;
       end
 
       POWER_BTN_ON:
       begin
-        OUT_PX = POWER_BTN_PX;
         POWER_BTN_ADDR = IN_ADDR[7:0];
         POWER_BTN_CLK = IN_CLK;
+        OUT_PX = POWER_BTN_PX;
       end
 
       RED_BTN_ON:
       begin
-        OUT_PX = RED_BTN_PX;
         RED_BTN_ADDR = IN_ADDR[13:0];
         RED_BTN_CLK = IN_CLK;
+        OUT_PX = RED_BTN_PX;
       end
 
       GREEN_BTN_ON:
       begin
-        OUT_PX = GREEN_BTN_PX;
         GREEN_BTN_ADDR = IN_ADDR[13:0];
         GREEN_BTN_CLK = IN_CLK;
+        OUT_PX = GREEN_BTN_PX;
       end
 
       BLUE_BTN_ON:
       begin
-        OUT_PX = BLUE_BTN_PX;
         BLUE_BTN_ADDR = IN_ADDR[13:0];
         BLUE_BTN_CLK = IN_CLK;
+        OUT_PX = BLUE_BTN_PX;
       end
 
       YELLOW_BTN_ON:
       begin
-        OUT_PX = YELLOW_BTN_PX;
         YELLOW_BTN_ADDR = IN_ADDR[13:0];
         YELLOW_BTN_CLK = IN_CLK;
+        OUT_PX = YELLOW_BTN_PX;
       end
 
       WIN_SCREEN:
       begin
-        OUT_PX = WIN_SCREEN_PX;
         WIN_SCREEN_ADDR = IN_ADDR[14:0];
         WIN_SCREEN_CLK = IN_CLK;
+        OUT_PX = WIN_SCREEN_PX;
       end
 
       LOSE_SCREEN:
       begin
-        OUT_PX = LOSE_SCREEN_PX;
         LOSE_SCREEN_ADDR = IN_ADDR[14:0];
         LOSE_SCREEN_CLK = IN_CLK;
+        OUT_PX = LOSE_SCREEN_PX;
       end
     endcase
   end

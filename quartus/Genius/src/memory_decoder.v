@@ -1,7 +1,7 @@
-// The MemoryDecoder module serves as an interface between the memory output
+// The memory_decoder module serves as an interface between the memory output
 // and the PixelDecoder module, decoding the pixel codes from the memory and
 // providing the corresponding RGB values as output.
-module MemoryDecoder
+module memory_decoder
 (
   input wire  [15:0] MEM_OUT,
   output wire [47:0] MEM_RGB
