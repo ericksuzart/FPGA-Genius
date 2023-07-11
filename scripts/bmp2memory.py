@@ -22,14 +22,11 @@ def read_bmp_as_hex(file_path):
         return [hex(byte)[2:].zfill(2) for byte in file.read()]
 
 
-def remove_header(hex_list, header_size=1078):
+def remove_header(hex_list, px_arr_offset):
     '''
-    Remove the header of the Intel HEX file, which is the first 1078 bytes
+    Remove the header of the Intel HEX file
     '''
-    hex_list = hex_list[header_size:]
-    # hex_list = hex_list[38:]
-    # 1078 for encoded image
-
+    hex_list = hex_list[px_arr_offset:]
     return hex_list
 
 
@@ -60,11 +57,7 @@ def write_hex_list_to_hex_file(hex_list, file_path, word_size):
 
 
 def process_bmp_file(bmp_file_path,
-                     word_size=2,
-                     width=360,
-                     height=360,
-                     output_file_path=None,
-                     header_size=1078):
+                     word_size=2):
     '''
     Process a BMP file to convert it to a memory hex file for the FPGA.
     '''
@@ -79,21 +72,26 @@ def process_bmp_file(bmp_file_path,
     # Cyclone® IV EP4CE115: 3888 kbits × 1024 ÷ 8 = 497664 bytes
     mem_max_size = 497664
 
+    print(f"{Fore.YELLOW}Reading {bmp_file_path}")
+    hex_list = read_bmp_as_hex(bmp_file_path)
+
+    # https://en.wikipedia.org/wiki/BMP_file_format (Bitmap file header)
+    width = int(hex_list[21] + hex_list[20] + hex_list[19] + hex_list[18], 16)
+    height = int(hex_list[25] + hex_list[24] + hex_list[23] + hex_list[22], 16)
+    px_arr_offset = int(hex_list[13] + hex_list[12] +
+                        hex_list[11] + hex_list[10], 16)
+
     if width * height > mem_max_size:
         raise ValueError(
             f"{Fore.RED}Error: Image is too big for memory: {bmp_file_path}")
 
-    print(f"{Fore.YELLOW}Reading {bmp_file_path}")
-    hex_list = read_bmp_as_hex(bmp_file_path)
-    print(f"{Fore.YELLOW}Remove {header_size} bytes from {bmp_file_path}")
-    hex_list = remove_header(hex_list, header_size)
+    print(f"{Fore.YELLOW}Removing the header ({px_arr_offset} bytes) from" +
+          f" {bmp_file_path}")
+    hex_list = remove_header(hex_list, px_arr_offset)
     print(f"{Fore.YELLOW}Generating hash of {bmp_file_path}")
-    hash = generate_hash(hex_list)  # hash sum for verification
 
-    if output_file_path is None:
-        hex_file_path = bmp_file_path + ".hex"
-    else:
-        hex_file_path = output_file_path
+    hash = generate_hash(hex_list)  # hash sum for verification
+    hex_file_path = bmp_file_path + ".hex"
 
     print(f"{Fore.YELLOW}Writing the encoded bitmap to {hex_file_path}")
     write_hex_list_to_hex_file(hex_list, hex_file_path, word_size)
@@ -108,6 +106,7 @@ def process_bmp_file(bmp_file_path,
     words = bytes // word_size
     mem_usage = bytes / mem_max_size * 100
 
+    print(f"\t{Fore.LIGHTBLACK_EX}size:{Fore.BLUE}\t{width}x{height}px")
     print(f"\t{Fore.LIGHTBLACK_EX}words:{Fore.BLUE}\t{words}")
     print(f"\t{Fore.LIGHTBLACK_EX}bits:{Fore.BLUE}\t{bits}")
     print(f"\t{Fore.LIGHTBLACK_EX}bytes:{Fore.BLUE}\t{bytes}")
@@ -116,35 +115,27 @@ def process_bmp_file(bmp_file_path,
     print(f"\t{Fore.LIGHTBLACK_EX}memory:{Fore.BLUE}\t{mem_usage:.2f}%" +
           f" of Cyclone® IV EP4CE115")
     print(f"{Fore.GREEN}--------------------------------------------------")
+    return mem_usage
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Convert BMP files to memory hex files.")
+        description="Convert indexed BMP files to Intel memory hex files.")
     parser.add_argument("bmp_files", metavar="file",
                         nargs="+", help="BMP file(s) to process")
     parser.add_argument("--word_size", type=int, default=2,
                         help="Number of bytes per line in the output hex" +
-                        " file, default=6 (or 2 pixels)")
-    parser.add_argument("--width", type=int, default=360,
-                        help="Width of the BMP image in pixels, default=360")
-    parser.add_argument("--height", type=int, default=360,
-                        help="Height of the BMP image in pixels, default=360")
-    parser.add_argument("--output", type=str, default=None,
-                        help="Output hex file path")
-    parser.add_argument("--h_size", type=int, default=1078,
-                        help="Size of the header of the bmp image in " +
-                        "bytes, default=1078")
+                        " file, default=2")
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
+    mem_usage = 0
     for bmp_file_path in args.bmp_files:
-        process_bmp_file(bmp_file_path,
-                         args.word_size,
-                         args.width,
-                         args.height,
-                         args.output,
-                         args.h_size)
+        mem_usage += process_bmp_file(bmp_file_path,
+                                      args.word_size)
+
+    print(f"{Fore.LIGHTBLACK_EX}Total memory usage: {Fore.BLUE}" +
+          f"{mem_usage:.2f}% of Cyclone® IV EP4CE115")
 
 
 if __name__ == "__main__":

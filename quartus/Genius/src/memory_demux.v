@@ -21,14 +21,14 @@ module MemoryDemux
   output reg [15:0] OUT_PX,
 
   // ----- Adresses -----
-  output reg [15:0] BACKGROUND_ADDR,  // MAX = 64800
-  output reg [15:0] POWER_BTN_ADDR,   // TODO define the MAX =
-  output reg [15:0] RED_BTN_ADDR,     // TODO define the MAX =
-  output reg [15:0] GREEN_BTN_ADDR,   // TODO define the MAX =
-  output reg [15:0] BLUE_BTN_ADDR,    // TODO define the MAX =
-  output reg [15:0] YELLOW_BTN_ADDR,  // TODO define the MAX =
-  output reg [15:0] WIN_SCREEN_ADDR,  // TODO define the MAX =
-  output reg [15:0] LOSE_SCREEN_ADDR, // TODO define the MAX =
+  output reg [15:0] BACKGROUND_ADDR,  // MAX = 360 x 360 / 2 = 64800
+  output reg [7:0]  POWER_BTN_ADDR,   // MAX = 22 x 21 / 2 = 231
+  output reg [13:0] RED_BTN_ADDR,     // MAX = 169 x 168 / 2 = 14196
+  output reg [13:0] GREEN_BTN_ADDR,   // MAX = 168 x 168 / 2 = 14112
+  output reg [13:0] BLUE_BTN_ADDR,    // MAX = 168 x 167 / 2 = 14028
+  output reg [13:0] YELLOW_BTN_ADDR,  // MAX = 168 x 167 / 2 = 14028
+  output reg [14:0] WIN_SCREEN_ADDR,  // MAX = 360 x 116 / 2 = 20880
+  output reg [14:0] LOSE_SCREEN_ADDR, // MAX = 360 x 134 / 2 = 24120
 
   // ----- Clocks -----
   output reg BACKGROUND_CLK,
@@ -81,49 +81,49 @@ module MemoryDemux
       POWER_BTN_ON:
       begin
         OUT_PX = POWER_BTN_PX;
-        POWER_BTN_ADDR = IN_ADDR;
+        POWER_BTN_ADDR = IN_ADDR[7:0];
         POWER_BTN_CLK = IN_CLK;
       end
 
       RED_BTN_ON:
       begin
         OUT_PX = RED_BTN_PX;
-        RED_BTN_ADDR = IN_ADDR;
+        RED_BTN_ADDR = IN_ADDR[13:0];
         RED_BTN_CLK = IN_CLK;
       end
 
       GREEN_BTN_ON:
       begin
         OUT_PX = GREEN_BTN_PX;
-        GREEN_BTN_ADDR = IN_ADDR;
+        GREEN_BTN_ADDR = IN_ADDR[13:0];
         GREEN_BTN_CLK = IN_CLK;
       end
 
       BLUE_BTN_ON:
       begin
         OUT_PX = BLUE_BTN_PX;
-        BLUE_BTN_ADDR = IN_ADDR;
+        BLUE_BTN_ADDR = IN_ADDR[13:0];
         BLUE_BTN_CLK = IN_CLK;
       end
 
       YELLOW_BTN_ON:
       begin
         OUT_PX = YELLOW_BTN_PX;
-        YELLOW_BTN_ADDR = IN_ADDR;
+        YELLOW_BTN_ADDR = IN_ADDR[13:0];
         YELLOW_BTN_CLK = IN_CLK;
       end
 
       WIN_SCREEN:
       begin
         OUT_PX = WIN_SCREEN_PX;
-        WIN_SCREEN_ADDR = IN_ADDR;
+        WIN_SCREEN_ADDR = IN_ADDR[14:0];
         WIN_SCREEN_CLK = IN_CLK;
       end
 
       LOSE_SCREEN:
       begin
         OUT_PX = LOSE_SCREEN_PX;
-        LOSE_SCREEN_ADDR = IN_ADDR;
+        LOSE_SCREEN_ADDR = IN_ADDR[14:0];
         LOSE_SCREEN_CLK = IN_CLK;
       end
     endcase

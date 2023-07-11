@@ -6,6 +6,7 @@
 **/*_tmp/**
 **/output_files/**
 **/simulation/**
+__**
 
 # files
 *.bak
