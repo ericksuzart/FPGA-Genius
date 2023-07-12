@@ -22,25 +22,29 @@ def read_bmp_as_hex(file_path):
         return [hex(byte)[2:].zfill(2) for byte in file.read()]
 
 
-def remove_header(hex_list, px_arr_offset):
+def crop_image(hex_list, px_arr_offset, im_size):
     '''
-    Remove the header of the Intel HEX file
+    Adjust the hex list to remove the header and the padding at the end of the
+    image data
     '''
-    hex_list = hex_list[px_arr_offset:]
+    hex_list = hex_list[px_arr_offset:px_arr_offset + im_size]
     return hex_list
 
 
-def generate_hash(encoded_list):
+def generate_hash(encoded_list, word_size):
     '''
     Generate a hash of the hex list using pixels as input to further
     verification
     '''
-    hash = 0
+    hash_value = 0
 
-    for code in encoded_list:
-        RGB = cp.colors[code]
-        hash += int(RGB, 16)
-    return hash
+    for i in range(0, len(encoded_list), word_size):
+        bytes_pair = encoded_list[i:i + word_size]
+        colors = [cp.colors[code] for code in bytes_pair]
+        line = ''.join(colors)
+        hash_value += int(line, 16)
+
+    return hash_value
 
 
 def write_hex_list_to_hex_file(hex_list, file_path, word_size):
@@ -78,20 +82,25 @@ def process_bmp_file(bmp_file_path,
     # https://en.wikipedia.org/wiki/BMP_file_format (Bitmap file header)
     width = int(hex_list[21] + hex_list[20] + hex_list[19] + hex_list[18], 16)
     height = int(hex_list[25] + hex_list[24] + hex_list[23] + hex_list[22], 16)
+    # This is the offset from the beginning of the file to the bitmap data
     px_arr_offset = int(hex_list[13] + hex_list[12] +
                         hex_list[11] + hex_list[10], 16)
+    # This is the size of the raw bitmap data
+    im_size = int(hex_list[37] + hex_list[36] +
+                  hex_list[35] + hex_list[34], 16)
 
-    if width * height > mem_max_size:
+    if im_size > mem_max_size:
         raise ValueError(
             f"{Fore.RED}Error: Image is too big for memory: {bmp_file_path}")
 
     print(f"{Fore.YELLOW}Removing the header ({px_arr_offset} bytes) from" +
           f" {bmp_file_path}")
-    hex_list = remove_header(hex_list, px_arr_offset)
+    hex_list = crop_image(hex_list, px_arr_offset, im_size)
     print(f"{Fore.YELLOW}Generating hash of {bmp_file_path}")
 
-    hash = generate_hash(hex_list)  # hash sum for verification
-    hex_file_path = bmp_file_path + ".hex"
+    hash = generate_hash(hex_list, word_size)  # hash sum for verification
+
+    hex_file_path = bmp_file_path.replace(".bmp", "") + ".hex"
 
     print(f"{Fore.YELLOW}Writing the encoded bitmap to {hex_file_path}")
     write_hex_list_to_hex_file(hex_list, hex_file_path, word_size)
@@ -101,7 +110,7 @@ def process_bmp_file(bmp_file_path,
     print(f"Statistics:")
 
     pixels = width * height
-    bytes = pixels  # one byte per pixel
+    bytes = im_size  # from image data size
     bits = bytes * 8
     words = bytes // word_size
     mem_usage = bytes / mem_max_size * 100

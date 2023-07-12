@@ -20,3 +20,6 @@ __**
 *.mti
 **/work/**
 transcript
+
+# Unignore folders
+!**/mem_init/**
