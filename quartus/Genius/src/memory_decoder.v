@@ -1,5 +1,5 @@
 // The memory_decoder module serves as an interface between the memory output
-// and the PixelDecoder module, decoding the pixel codes from the memory and
+// and the pixel_decoder module, decoding the pixel codes from the memory and
 // providing the corresponding RGB values as output.
 module memory_decoder
 (
@@ -12,12 +12,12 @@ module memory_decoder
   assign CODE0 = MEM_OUT[15:8]; // first pixel
   assign CODE1 = MEM_OUT[7:0];  // second pixel
 
-  PixelDecoder pixel0_decoder (
+  pixel_decoder pixel0_decoder (
     .CODE(CODE0),
     .RGB(RGB0)
   );
 
-  PixelDecoder pixel1_decoder (
+  pixel_decoder pixel1_decoder (
     .CODE(CODE1),
     .RGB(RGB1)
   );

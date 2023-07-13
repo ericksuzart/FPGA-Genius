@@ -20,7 +20,7 @@ refer to the applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 240 192)
+	(rect 16 16 296 192)
 	(text "VGA_controller" (rect 5 0 69 12)(font "Arial" ))
 	(text "inst" (rect 8 160 20 172)(font "Arial" ))
 	(port
@@ -45,53 +45,60 @@ refer to the applicable agreement for further details.
 		(line (pt 0 64)(pt 16 64)(line_width 3))
 	)
 	(port
-		(pt 224 32)
+		(pt 0 80)
+		(input)
+		(text "SPRITES_FLAGS[6..0]" (rect 0 0 100 12)(font "Arial" ))
+		(text "SPRITES_FLAGS[6..0]" (rect 21 75 121 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 280 32)
 		(output)
 		(text "VGA_HS" (rect 0 0 42 12)(font "Arial" ))
-		(text "VGA_HS" (rect 161 27 203 39)(font "Arial" ))
-		(line (pt 224 32)(pt 208 32)(line_width 1))
+		(text "VGA_HS" (rect 217 27 259 39)(font "Arial" ))
+		(line (pt 280 32)(pt 264 32)(line_width 1))
 	)
 	(port
-		(pt 224 48)
+		(pt 280 48)
 		(output)
 		(text "VGA_VS" (rect 0 0 43 12)(font "Arial" ))
-		(text "VGA_VS" (rect 160 43 203 55)(font "Arial" ))
-		(line (pt 224 48)(pt 208 48)(line_width 1))
+		(text "VGA_VS" (rect 216 43 259 55)(font "Arial" ))
+		(line (pt 280 48)(pt 264 48)(line_width 1))
 	)
 	(port
-		(pt 224 64)
+		(pt 280 64)
 		(output)
 		(text "VGA_BLANK_N" (rect 0 0 76 12)(font "Arial" ))
-		(text "VGA_BLANK_N" (rect 127 59 203 71)(font "Arial" ))
-		(line (pt 224 64)(pt 208 64)(line_width 1))
+		(text "VGA_BLANK_N" (rect 183 59 259 71)(font "Arial" ))
+		(line (pt 280 64)(pt 264 64)(line_width 1))
 	)
 	(port
-		(pt 224 80)
+		(pt 280 80)
 		(output)
 		(text "VGA_R[7..0]" (rect 0 0 57 12)(font "Arial" ))
-		(text "VGA_R[7..0]" (rect 146 75 203 87)(font "Arial" ))
-		(line (pt 224 80)(pt 208 80)(line_width 3))
+		(text "VGA_R[7..0]" (rect 202 75 259 87)(font "Arial" ))
+		(line (pt 280 80)(pt 264 80)(line_width 3))
 	)
 	(port
-		(pt 224 96)
+		(pt 280 96)
 		(output)
 		(text "VGA_G[7..0]" (rect 0 0 56 12)(font "Arial" ))
-		(text "VGA_G[7..0]" (rect 147 91 203 103)(font "Arial" ))
-		(line (pt 224 96)(pt 208 96)(line_width 3))
+		(text "VGA_G[7..0]" (rect 203 91 259 103)(font "Arial" ))
+		(line (pt 280 96)(pt 264 96)(line_width 3))
 	)
 	(port
-		(pt 224 112)
+		(pt 280 112)
 		(output)
 		(text "VGA_B[7..0]" (rect 0 0 55 12)(font "Arial" ))
-		(text "VGA_B[7..0]" (rect 148 107 203 119)(font "Arial" ))
-		(line (pt 224 112)(pt 208 112)(line_width 3))
+		(text "VGA_B[7..0]" (rect 204 107 259 119)(font "Arial" ))
+		(line (pt 280 112)(pt 264 112)(line_width 3))
 	)
 	(port
-		(pt 224 128)
+		(pt 280 128)
 		(output)
-		(text "DISP_EN" (rect 0 0 41 12)(font "Arial" ))
-		(text "DISP_EN" (rect 162 123 203 135)(font "Arial" ))
-		(line (pt 224 128)(pt 208 128)(line_width 1))
+		(text "SPRITES_EN[7..0]" (rect 0 0 81 12)(font "Arial" ))
+		(text "SPRITES_EN[7..0]" (rect 178 123 259 135)(font "Arial" ))
+		(line (pt 280 128)(pt 264 128)(line_width 3))
 	)
 	(parameter
 		"H_DISP"
@@ -154,27 +161,167 @@ refer to the applicable agreement for further details.
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
-		"G_HS"
+		"BACKGROUND_HS"
 		"360"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
-		"G_VS"
+		"BACKGROUND_VS"
 		"360"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
-		"G_X"
-		""
+		"BACKGROUND_X"
+		"120"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
-		"G_Y"
+		"BACKGROUND_Y"
+		"60"
 		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"BLUE_HS"
+		"168"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"BLUE_VS"
+		"167"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"BLUE_X"
+		"192"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"BLUE_Y"
+		"193"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"GREEN_HS"
+		"168"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"GREEN_VS"
+		"168"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"GREEN_X"
+		"0"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"GREEN_Y"
+		"0"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"RED_HS"
+		"169"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"RED_VS"
+		"168"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"RED_X"
+		"191"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"RED_Y"
+		"0"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"YELLOW_HS"
+		"168"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"YELLOW_VS"
+		"167"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"YELLOW_X"
+		"0"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"YELLOW_Y"
+		"192"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"LOSE_HS"
+		"360"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"LOSE_VS"
+		"134"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"LOSE_X"
+		"0"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"LOSE_Y"
+		"113"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"WIN_HS"
+		"360"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"WIN_VS"
+		"116"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"WIN_X"
+		"0"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"WIN_Y"
+		"122"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"PWR_HS"
+		"22"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"PWR_VS"
+		"21"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"PWR_X"
+		"169"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"PWR_Y"
+		"197"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 208 160)(line_width 1))
+		(rectangle (rect 16 16 264 160)(line_width 1))
 	)
-	(annotation_block (parameter)(rect 240 -64 340 16))
+	(annotation_block (parameter)(rect 296 -64 396 16))
 )
