@@ -2,7 +2,7 @@
 
 # Check if argcomplete, intelhex, and colorama are installed
 check_dependencies() {
-    local dependencies=("argcomplete" "intelhex" "colorama")
+    local dependencies=("argcomplete" "colorama")
 
     for dependency in "${dependencies[@]}"; do
         if ! python3 -c "import $dependency" &> /dev/null; then
