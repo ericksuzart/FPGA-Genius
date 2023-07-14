@@ -1,11 +1,14 @@
-module remote_control (clk, rst, irda, rdy);
+module remote_control (clk, rst, irda, rdy, buttons, color);
   input clk, rst, irda;
   integer count;
+  integer count_c;
   
   output reg rdy = 1'b0;
   
   // Registradores de estado
   reg [3:0] state;
+  
+  output reg [1:0] color;
   
   // Codificação dos estados
   parameter s0 = 4'b0000,
@@ -22,7 +25,7 @@ module remote_control (clk, rst, irda, rdy);
 				s11 = 4'b1011,
 				s12 = 4'b1100;
 
-  reg [2:0] buttons = 3'b000;
+  output reg [2:0] buttons = 3'bxxx;
 
   initial 
   begin
@@ -37,7 +40,8 @@ module remote_control (clk, rst, irda, rdy);
       case(state)
         s0:
         begin
-          if (irda == 1'b1) state <= s0;
+          if (irda == 1'b1) 
+				state <= s0;
           else state <= s1;
         end
 
@@ -109,8 +113,16 @@ module remote_control (clk, rst, irda, rdy);
   
   always @(negedge clk) begin
     case(state)
-      s0: count = 32'bx;
-      s1: count = 0;
+      s0: begin
+			count = 32'bx;
+			count_c = 0;
+			buttons = 3'bxxx;
+		end
+      s1: begin
+			count = 0;
+			count_c = count_c +1;
+			color = count_c;
+		end
       s2: count = count + 1;
       s3: buttons = {irda, buttons[2:1]};
 		s4: count = count+1;
