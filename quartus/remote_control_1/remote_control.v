@@ -117,6 +117,10 @@ module remote_control (clk, rst, irda, rdy, buttons, color);
 			count = 32'bx;
 			count_c = 0;
 			buttons = 3'bxxx;
+<<<<<<< HEAD:quartus/remote_control/remote_control.v
+			rdy = 1'b0;
+=======
+>>>>>>> 1160a765f07c1316874ee1d88759d5a3a739f343:quartus/controle_IR/remote_control.v
 		end
       s1: begin
 			count = 0;
