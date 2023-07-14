@@ -1,4 +1,4 @@
-module genius(
+module genius_vga(
   // ------ Input
   input VGA_FLAG,
   input VGA_LOSE,
@@ -8,7 +8,7 @@ module genius(
   input RESET,
 
   // ------ Output
-  output reg [7:0] SPRITES_FLAGS  //{BLUE, GREEN, RED, YELLOW, LOSE, WIN, PWR_BTN},
+  output reg [6:0] SPRITES_FLAGS  // {BLUE, GREEN, RED, YELLOW, LOSE, WIN, PWR_BTN}
 );
 
 reg[2:0] estado_atual;
@@ -138,8 +138,8 @@ always @(VGA or VGA_FLAG or VGA_LOSE or VGA_WIN or RESET or B)
     endcase
   end
 
-
-  always @(*) begin //Determinar as saídas 
+  // Determinar as saídas 
+  always @(*) begin 
 
     if (RESET) begin
       SPRITES_FLAGS = 7'b0000000;
@@ -188,7 +188,4 @@ always @(VGA or VGA_FLAG or VGA_LOSE or VGA_WIN or RESET or B)
     endcase
   end
 
-
-
 endmodule
-
