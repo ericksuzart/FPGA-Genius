@@ -1287,6 +1287,122 @@ https://fpgasoftware.intel.com/eula.
 	)
 	(annotation_block (parameter)(rect -320 184 -149 214))
 )
+(symbol
+	(rect -600 -168 -432 -56)
+	(text "remote_control" (rect 5 0 80 11)(font "Arial" ))
+	(text "inst13" (rect 8 96 39 109)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 15 11)(font "Arial" ))
+		(text "clk" (rect 21 27 36 38)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "rst" (rect 0 0 14 11)(font "Arial" ))
+		(text "rst" (rect 21 43 35 54)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "irda" (rect 0 0 21 11)(font "Arial" ))
+		(text "irda" (rect 21 59 42 70)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 168 32)
+		(output)
+		(text "rdy" (rect 0 0 16 11)(font "Arial" ))
+		(text "rdy" (rect 134 27 150 38)(font "Arial" ))
+		(line (pt 168 32)(pt 152 32))
+	)
+	(port
+		(pt 168 48)
+		(output)
+		(text "buttons[2..0]" (rect 0 0 61 11)(font "Arial" ))
+		(text "buttons[2..0]" (rect 96 43 157 54)(font "Arial" ))
+		(line (pt 168 48)(pt 152 48)(line_width 3))
+	)
+	(port
+		(pt 168 64)
+		(output)
+		(text "color[1..0]" (rect 0 0 48 11)(font "Arial" ))
+		(text "color[1..0]" (rect 107 59 155 70)(font "Arial" ))
+		(line (pt 168 64)(pt 152 64)(line_width 3))
+	)
+	(parameter
+		"s0"
+		"0000"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s1"
+		"0001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s2"
+		"0010"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s3"
+		"0011"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s4"
+		"0100"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s5"
+		"0101"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s6"
+		"0110"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s7"
+		"0111"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s8"
+		"1000"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s9"
+		"1001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s10"
+		"1010"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s11"
+		"1011"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"s12"
+		"1100"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(drawing
+		(rectangle (rect 16 16 152 96))
+	)
+	(annotation_block (parameter)(rect -600 -48 -416 168))
+)
 (connector
 	(pt 1008 -632)
 	(pt 1144 -632)
@@ -1508,18 +1624,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 696 -696)
 )
 (connector
-	(pt 416 -824)
-	(pt -184 -824)
-)
-(connector
-	(pt 416 -824)
-	(pt 416 -776)
-)
-(connector
-	(pt 416 -776)
-	(pt 416 -696)
-)
-(connector
 	(pt 344 -288)
 	(pt 248 -288)
 	(bus)
@@ -1563,10 +1667,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt -96 288)
 	(pt 80 288)
-)
-(connector
-	(pt -184 -824)
-	(pt -184 -168)
 )
 (connector
 	(pt -184 -168)
@@ -1665,10 +1765,6 @@ https://fpgasoftware.intel.com/eula.
 )
 (connector
 	(pt -336 -472)
-	(pt 168 -472)
-)
-(connector
-	(pt -336 -472)
 	(pt -336 96)
 )
 (connector
@@ -1723,6 +1819,64 @@ https://fpgasoftware.intel.com/eula.
 	(pt -400 408)
 	(pt 368 408)
 )
+(connector
+	(pt -336 -472)
+	(pt 168 -472)
+)
+(connector
+	(pt 416 -832)
+	(pt 416 -776)
+)
+(connector
+	(pt 416 -776)
+	(pt 416 -696)
+)
+(connector
+	(pt -184 -832)
+	(pt -184 -168)
+)
+(connector
+	(pt -840 -832)
+	(pt -184 -832)
+)
+(connector
+	(pt -184 -832)
+	(pt 416 -832)
+)
+(connector
+	(pt -728 -472)
+	(pt -728 -136)
+)
+(connector
+	(pt -728 -136)
+	(pt -600 -136)
+)
+(connector
+	(pt -840 -832)
+	(pt -840 -120)
+)
+(connector
+	(pt -840 -120)
+	(pt -600 -120)
+)
+(connector
+	(pt -432 -136)
+	(pt 96 -136)
+)
+(connector
+	(pt -432 -120)
+	(pt 96 -120)
+	(bus)
+)
+(connector
+	(pt -432 -104)
+	(pt 96 -104)
+	(bus)
+)
+(connector
+	(pt -728 -472)
+	(pt -336 -472)
+)
 (junction (pt 712 -712))
 (junction (pt -152 -680))
 (junction (pt 152 -584))
@@ -1733,3 +1887,5 @@ https://fpgasoftware.intel.com/eula.
 (junction (pt -360 128))
 (junction (pt 168 -584))
 (junction (pt -336 96))
+(junction (pt -336 -472))
+(junction (pt -184 -832))
