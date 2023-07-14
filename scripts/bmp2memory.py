@@ -79,6 +79,15 @@ def write_hex_list_to_hex_file(hex_list, file_path, word_size):
         file.write('\n'.join(byte_list))
 
 
+def convert_bmp_from_bottom_to_top(hex_list):
+    '''
+    Convert the BMP from bottom->top to top->bottom because the BMP is stored
+    from bottom->top, so we need to reverse it. The output is already in RGB
+    '''
+    hex_list.reverse()
+    return hex_list
+
+
 def process_bmp_file(bmp_file_path,
                      word_size=2):
     '''
@@ -107,6 +116,14 @@ def process_bmp_file(bmp_file_path,
     # This is the size of the raw bitmap data
     im_size = int(hex_list[37] + hex_list[36] +
                   hex_list[35] + hex_list[34], 16)
+    pixels = width * height
+    bytes = im_size  # from image data size
+    bits = bytes * 8
+    words = bytes // word_size
+    mem_usage = bytes / mem_max_size * 100
+
+    if (pixels // word_size != words):
+        raise ValueError(f"\t{Fore.RED}Crop this image, something is wrong!")
 
     if im_size > mem_max_size:
         raise ValueError(
@@ -115,8 +132,11 @@ def process_bmp_file(bmp_file_path,
     print(f"{Fore.YELLOW}Removing the header ({px_arr_offset} bytes) from" +
           f" {bmp_file_path}")
     hex_list = crop_image(hex_list, px_arr_offset, im_size)
-    print(f"{Fore.YELLOW}Generating hash of {bmp_file_path}")
 
+    print(f"{Fore.YELLOW}Converting bottom up to top down")
+    hex_list = convert_bmp_from_bottom_to_top(hex_list)
+
+    print(f"{Fore.YELLOW}Generating hash of {bmp_file_path}")
     hash = generate_hash(hex_list, word_size)  # hash sum for verification
 
     hex_file_path = bmp_file_path.replace(".bmp", "") + ".hex"
@@ -127,12 +147,6 @@ def process_bmp_file(bmp_file_path,
     print(f"{Fore.GREEN}--------------------------------------------------")
     print(f"{Fore.GREEN}Done for {bmp_file_path}")
     print(f"Statistics:")
-
-    pixels = width * height
-    bytes = im_size  # from image data size
-    bits = bytes * 8
-    words = bytes // word_size
-    mem_usage = bytes / mem_max_size * 100
 
     print(f"\t{Fore.LIGHTBLACK_EX}size:{Fore.BLUE}\t{width}x{height}px(" +
           f"{width * height} px)")
