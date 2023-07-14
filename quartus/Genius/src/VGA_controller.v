@@ -1,19 +1,21 @@
 module VGA_controller
 (
-    // VGA I/O.
-    input wire  VGA_CLK,        // VGA clock.
-    input wire  RESET,          // Reset.
-    input wire  [23:0] RGB,      // PIXEL
+  // VGA I/O.
+  input  VGA_CLK,             // VGA clock.
+  input  RESET,               // Reset.
+  input  [23:0] RGB,          // PIXEL
 
-    output wire VGA_HS,         // Horizontal sync out.
-    output wire VGA_VS,         // Vertical sync out.
-    output wire VGA_BLANK_N,    // Active video signal.
+  output VGA_HS,              // Horizontal sync out.
+  output VGA_VS,              // Vertical sync out.
+  output VGA_BLANK_N,         // Active video signal.
 
-    output wire [7:0] VGA_R,    // Red video signal.
-    output wire [7:0] VGA_G,    // Green video signal.
-    output wire [7:0] VGA_B,    // Blue video signal.
-    // Game I/O
-    output wire DISP_EN         // Enable display.
+  output [7:0] VGA_R,         // Red video signal.
+  output [7:0] VGA_G,         // Green video signal.
+  output [7:0] VGA_B,         // Blue video signal.
+
+  // Game I/O
+  input [6:0] SPRITES_FLAGS,  // Flags for 7 sprites
+  output [7:0] SPRITES_EN     // Flags for all 8 sprites
 );
 
 // VGA timings:
@@ -57,37 +59,83 @@ parameter V_OFF = V_FPORCH + V_SYNC + V_BPORCH; // Off lines in one frame.
 parameter H_PIXELS = H_OFF + H_DISP;            // Total pixels in one line.
 parameter V_LINES = V_OFF + V_DISP;             // Total lines in one frame.
 
-// Game parameters (constants)
-parameter G_HS = 360;    // Horizontal size.
-parameter G_VS = 360;    // Vertical size.
-parameter G_X =  120;    // Horizontal start position in the screen.
-parameter G_Y =  60;     // Vertical start position in the screen.
+// Background size and position.
+parameter BACKGROUND_HS = 360;    // Horizontal size.
+parameter BACKGROUND_VS = 360;    // Vertical size.
+parameter BACKGROUND_X =  120;    // Horizontal start position in the screen.
+parameter BACKGROUND_Y =  60;     // Vertical start position in the screen.
+
+// Blue button ok
+parameter BLUE_HS = 168;
+parameter BLUE_VS = 168;
+parameter BLUE_X =  191;  // (or 190, or 1)
+parameter BLUE_Y =  191;  // (or 190 or 1)
+
+// Green button ok
+parameter GREEN_HS = 168;
+parameter GREEN_VS = 168;
+parameter GREEN_X =  1; // (or 190)
+parameter GREEN_Y =  1; // (or 190)
+
+// Red button ok
+parameter RED_HS = 168;
+parameter RED_VS = 168;
+parameter RED_X =  191; // (or 190, or 1)
+parameter RED_Y =  1; // (or 190)
+
+// Yellow button ok
+parameter YELLOW_HS = 168;
+parameter YELLOW_VS = 168;
+parameter YELLOW_X =  1;
+parameter YELLOW_Y =  191; // (or 190, or 1)
+
+// Lose button
+parameter LOSE_HS = 360;
+parameter LOSE_VS = 140;
+parameter LOSE_X =  0; // (or 190)
+parameter LOSE_Y =  110;
+
+// Win button
+parameter WIN_HS = 360;
+parameter WIN_VS = 120;
+parameter WIN_X =  0;
+parameter WIN_Y =  120;
+
+// Power button ok
+parameter PWR_HS = 20;
+parameter PWR_VS = 20;
+parameter PWR_X =  170; // or 169
+parameter PWR_Y =  198; // or 197
 
 // Registers for storing the horizontal & vertical counters.
 reg [9:0] h_c;
 reg [9:0] v_c;
+wire [9:0] X;         // X coordinate.
+wire [9:0] Y;         // Y coordinate.
+
+wire DISP_EN, BACKGROUND_EN, BLUE_EN, GREEN_EN, RED_EN, YELLOW_EN, LOSE_EN, WIN_EN, PWR_EN;
 
 // Counting pixels.
 always @(posedge VGA_CLK)
 begin
-    if (RESET)
+  if (RESET)
+  begin
+    h_c <= 0;
+    v_c <= 0;
+  end else 
+  begin
+    if (h_c < H_PIXELS - 1)
+      h_c <= h_c + 1;
+    else
     begin
-        h_c <= 0;
-        v_c <= 0;
-    end else 
-    begin
-        if (h_c < H_PIXELS - 1)
-            h_c <= h_c + 1;
-        else
-        begin
-            h_c <= 0;
+      h_c <= 0;
 
-            if (v_c < V_LINES - 1)
-                v_c <= v_c + 1;
-            else
-                v_c <= 0;
-        end
+      if (v_c < V_LINES - 1)
+        v_c <= v_c + 1;
+      else
+        v_c <= 0;
     end
+  end
 end
 
 // Generate sync pulses (active low)
@@ -96,14 +144,55 @@ assign VGA_VS = (v_c >= V_FPORCH && v_c < V_FPORCH + V_SYNC)? 0:1;
 // Generate inactive video signal (active low), blanking the screen.
 assign VGA_BLANK_N = (h_c >= H_OFF && v_c >= V_OFF)? 1:0;
 
-assign DISP_EN = (h_c >= G_X + H_OFF && 
-                  h_c < G_X + H_OFF + G_HS &&
-                  v_c >= G_Y + V_OFF &&
-                  v_c < G_Y + V_OFF + G_VS)? 1:0;
+assign DISP_EN = (h_c >= BACKGROUND_X + H_OFF && 
+                  h_c < BACKGROUND_X + H_OFF + BACKGROUND_HS &&
+                  v_c >= BACKGROUND_Y + V_OFF &&
+                  v_c < BACKGROUND_Y + V_OFF + BACKGROUND_VS)? 1:0;
 
+assign X = (DISP_EN)? h_c - BACKGROUND_X - H_OFF : -1;
+assign Y = (DISP_EN)? v_c - BACKGROUND_Y - V_OFF : -1;
+
+// Assign the flags for the display of the buttons
+assign BACKGROUND_EN = DISP_EN;
+
+assign BLUE_EN = (X >= BLUE_X &&
+                  X < BLUE_X + BLUE_HS &&
+                  Y >= BLUE_Y &&
+                  Y < BLUE_Y + BLUE_VS)? SPRITES_FLAGS[0]:0;
+
+assign GREEN_EN = (X >= GREEN_X &&
+                   X < GREEN_X + GREEN_HS &&
+                   Y >= GREEN_Y &&
+                   Y < GREEN_Y + GREEN_VS)? SPRITES_FLAGS[1]:0;
+
+assign RED_EN = (X >= RED_X &&
+                 X < RED_X + RED_HS &&
+                 Y >= RED_Y &&
+                 Y < RED_Y + RED_VS)? SPRITES_FLAGS[2]:0;
+
+assign YELLOW_EN = (X >= YELLOW_X &&
+                    X < YELLOW_X + YELLOW_HS &&
+                    Y >= YELLOW_Y &&
+                    Y < YELLOW_Y + YELLOW_VS)? SPRITES_FLAGS[3]:0;
+
+assign LOSE_EN = (X >= LOSE_X &&
+                  X < LOSE_X + LOSE_HS &&
+                  Y >= LOSE_Y &&
+                  Y < LOSE_Y + LOSE_VS)? SPRITES_FLAGS[4]:0;
+
+assign WIN_EN = (X >= WIN_X &&
+                 X < WIN_X + WIN_HS &&
+                 Y >= WIN_Y &&
+                 Y < WIN_Y + WIN_VS)? SPRITES_FLAGS[5]:0;
+
+assign PWR_EN = (X >= PWR_X &&
+                 X < PWR_X + PWR_HS &&
+                 Y >= PWR_Y &&
+                 Y < PWR_Y + PWR_VS)? SPRITES_FLAGS[6]:0;
+
+assign SPRITES_EN = {BACKGROUND_EN, BLUE_EN, GREEN_EN, RED_EN, YELLOW_EN, LOSE_EN, WIN_EN, PWR_EN};
 assign VGA_R = (DISP_EN)?  RGB[23:16] : 0;
 assign VGA_G = (DISP_EN)?  RGB[15:8]  : 0;
 assign VGA_B = (DISP_EN)?  RGB[7:0]   : 0;
-
 
 endmodule

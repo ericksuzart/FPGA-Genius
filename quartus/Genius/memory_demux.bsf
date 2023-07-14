@@ -1,0 +1,266 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2018  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 16 16 368 352)
+	(text "memory_demux" (rect 5 0 73 12)(font "Arial" ))
+	(text "inst" (rect 8 320 20 332)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "SELECTOR[2..0]" (rect 0 0 74 12)(font "Arial" ))
+		(text "SELECTOR[2..0]" (rect 21 27 95 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "IN_ADDR[15..0]" (rect 0 0 69 12)(font "Arial" ))
+		(text "IN_ADDR[15..0]" (rect 21 43 90 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "IN_CLK" (rect 0 0 35 12)(font "Arial" ))
+		(text "IN_CLK" (rect 21 59 56 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 1))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "BACKGROUND_PX[15..0]" (rect 0 0 113 12)(font "Arial" ))
+		(text "BACKGROUND_PX[15..0]" (rect 21 75 134 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "POWER_BTN_PX[15..0]" (rect 0 0 105 12)(font "Arial" ))
+		(text "POWER_BTN_PX[15..0]" (rect 21 91 126 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 3))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "RED_BTN_PX[15..0]" (rect 0 0 88 12)(font "Arial" ))
+		(text "RED_BTN_PX[15..0]" (rect 21 107 109 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 3))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "GREEN_BTN_PX[15..0]" (rect 0 0 102 12)(font "Arial" ))
+		(text "GREEN_BTN_PX[15..0]" (rect 21 123 123 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "BLUE_BTN_PX[15..0]" (rect 0 0 92 12)(font "Arial" ))
+		(text "BLUE_BTN_PX[15..0]" (rect 21 139 113 151)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "YELLOW_BTN_PX[15..0]" (rect 0 0 109 12)(font "Arial" ))
+		(text "YELLOW_BTN_PX[15..0]" (rect 21 155 130 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160)(line_width 3))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "WIN_SCREEN_PX[15..0]" (rect 0 0 109 12)(font "Arial" ))
+		(text "WIN_SCREEN_PX[15..0]" (rect 21 171 130 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176)(line_width 3))
+	)
+	(port
+		(pt 0 192)
+		(input)
+		(text "LOSE_SCREEN_PX[15..0]" (rect 0 0 115 12)(font "Arial" ))
+		(text "LOSE_SCREEN_PX[15..0]" (rect 21 187 136 199)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 3))
+	)
+	(port
+		(pt 352 32)
+		(output)
+		(text "OUT_PX[15..0]" (rect 0 0 61 12)(font "Arial" ))
+		(text "OUT_PX[15..0]" (rect 270 27 331 39)(font "Arial" ))
+		(line (pt 352 32)(pt 336 32)(line_width 3))
+	)
+	(port
+		(pt 352 48)
+		(output)
+		(text "BACKGROUND_ADDR[15..0]" (rect 0 0 132 12)(font "Arial" ))
+		(text "BACKGROUND_ADDR[15..0]" (rect 199 43 331 55)(font "Arial" ))
+		(line (pt 352 48)(pt 336 48)(line_width 3))
+	)
+	(port
+		(pt 352 64)
+		(output)
+		(text "POWER_BTN_ADDR[7..0]" (rect 0 0 120 12)(font "Arial" ))
+		(text "POWER_BTN_ADDR[7..0]" (rect 211 59 331 71)(font "Arial" ))
+		(line (pt 352 64)(pt 336 64)(line_width 3))
+	)
+	(port
+		(pt 352 80)
+		(output)
+		(text "RED_BTN_ADDR[13..0]" (rect 0 0 107 12)(font "Arial" ))
+		(text "RED_BTN_ADDR[13..0]" (rect 224 75 331 87)(font "Arial" ))
+		(line (pt 352 80)(pt 336 80)(line_width 3))
+	)
+	(port
+		(pt 352 96)
+		(output)
+		(text "GREEN_BTN_ADDR[13..0]" (rect 0 0 121 12)(font "Arial" ))
+		(text "GREEN_BTN_ADDR[13..0]" (rect 210 91 331 103)(font "Arial" ))
+		(line (pt 352 96)(pt 336 96)(line_width 3))
+	)
+	(port
+		(pt 352 112)
+		(output)
+		(text "BLUE_BTN_ADDR[13..0]" (rect 0 0 110 12)(font "Arial" ))
+		(text "BLUE_BTN_ADDR[13..0]" (rect 221 107 331 119)(font "Arial" ))
+		(line (pt 352 112)(pt 336 112)(line_width 3))
+	)
+	(port
+		(pt 352 128)
+		(output)
+		(text "YELLOW_BTN_ADDR[13..0]" (rect 0 0 128 12)(font "Arial" ))
+		(text "YELLOW_BTN_ADDR[13..0]" (rect 203 123 331 135)(font "Arial" ))
+		(line (pt 352 128)(pt 336 128)(line_width 3))
+	)
+	(port
+		(pt 352 144)
+		(output)
+		(text "WIN_SCREEN_ADDR[14..0]" (rect 0 0 129 12)(font "Arial" ))
+		(text "WIN_SCREEN_ADDR[14..0]" (rect 202 139 331 151)(font "Arial" ))
+		(line (pt 352 144)(pt 336 144)(line_width 3))
+	)
+	(port
+		(pt 352 160)
+		(output)
+		(text "LOSE_SCREEN_ADDR[14..0]" (rect 0 0 135 12)(font "Arial" ))
+		(text "LOSE_SCREEN_ADDR[14..0]" (rect 196 155 331 167)(font "Arial" ))
+		(line (pt 352 160)(pt 336 160)(line_width 3))
+	)
+	(port
+		(pt 352 176)
+		(output)
+		(text "BACKGROUND_CLK" (rect 0 0 97 12)(font "Arial" ))
+		(text "BACKGROUND_CLK" (rect 234 171 331 183)(font "Arial" ))
+		(line (pt 352 176)(pt 336 176)(line_width 1))
+	)
+	(port
+		(pt 352 192)
+		(output)
+		(text "POWER_BTN_CLK" (rect 0 0 89 12)(font "Arial" ))
+		(text "POWER_BTN_CLK" (rect 242 187 331 199)(font "Arial" ))
+		(line (pt 352 192)(pt 336 192)(line_width 1))
+	)
+	(port
+		(pt 352 208)
+		(output)
+		(text "RED_BTN_CLK" (rect 0 0 73 12)(font "Arial" ))
+		(text "RED_BTN_CLK" (rect 258 203 331 215)(font "Arial" ))
+		(line (pt 352 208)(pt 336 208)(line_width 1))
+	)
+	(port
+		(pt 352 224)
+		(output)
+		(text "GREEN_BTN_CLK" (rect 0 0 87 12)(font "Arial" ))
+		(text "GREEN_BTN_CLK" (rect 244 219 331 231)(font "Arial" ))
+		(line (pt 352 224)(pt 336 224)(line_width 1))
+	)
+	(port
+		(pt 352 240)
+		(output)
+		(text "BLUE_BTN_CLK" (rect 0 0 76 12)(font "Arial" ))
+		(text "BLUE_BTN_CLK" (rect 255 235 331 247)(font "Arial" ))
+		(line (pt 352 240)(pt 336 240)(line_width 1))
+	)
+	(port
+		(pt 352 256)
+		(output)
+		(text "YELLOW_BTN_CLK" (rect 0 0 94 12)(font "Arial" ))
+		(text "YELLOW_BTN_CLK" (rect 237 251 331 263)(font "Arial" ))
+		(line (pt 352 256)(pt 336 256)(line_width 1))
+	)
+	(port
+		(pt 352 272)
+		(output)
+		(text "WIN_SCREEN_CLK" (rect 0 0 94 12)(font "Arial" ))
+		(text "WIN_SCREEN_CLK" (rect 237 267 331 279)(font "Arial" ))
+		(line (pt 352 272)(pt 336 272)(line_width 1))
+	)
+	(port
+		(pt 352 288)
+		(output)
+		(text "LOSE_SCREEN_CLK" (rect 0 0 100 12)(font "Arial" ))
+		(text "LOSE_SCREEN_CLK" (rect 231 283 331 295)(font "Arial" ))
+		(line (pt 352 288)(pt 336 288)(line_width 1))
+	)
+	(parameter
+		"BACKGROUND"
+		"000"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"POWER_BTN_ON"
+		"001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"RED_BTN_ON"
+		"010"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"GREEN_BTN_ON"
+		"011"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"BLUE_BTN_ON"
+		"100"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"YELLOW_BTN_ON"
+		"101"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"WIN_SCREEN"
+		"110"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"LOSE_SCREEN"
+		"111"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(drawing
+		(rectangle (rect 16 16 336 320)(line_width 1))
+	)
+	(annotation_block (parameter)(rect 368 -64 468 16))
+)

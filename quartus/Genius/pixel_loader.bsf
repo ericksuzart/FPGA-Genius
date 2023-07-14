@@ -26,15 +26,15 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 0 32)
 		(input)
-		(text "CLK" (rect 0 0 20 12)(font "Arial" ))
-		(text "CLK" (rect 21 27 41 39)(font "Arial" ))
+		(text "RESET" (rect 0 0 34 12)(font "Arial" ))
+		(text "RESET" (rect 21 27 55 39)(font "Arial" ))
 		(line (pt 0 32)(pt 16 32)(line_width 1))
 	)
 	(port
 		(pt 0 48)
 		(input)
-		(text "RESET" (rect 0 0 34 12)(font "Arial" ))
-		(text "RESET" (rect 21 43 55 55)(font "Arial" ))
+		(text "CLK" (rect 0 0 20 12)(font "Arial" ))
+		(text "CLK" (rect 21 43 41 55)(font "Arial" ))
 		(line (pt 0 48)(pt 16 48)(line_width 1))
 	)
 	(port
@@ -47,31 +47,118 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 0 80)
 		(input)
-		(text "INTERFACE_EN" (rect 0 0 79 12)(font "Arial" ))
-		(text "INTERFACE_EN" (rect 21 75 100 87)(font "Arial" ))
-		(line (pt 0 80)(pt 16 80)(line_width 1))
+		(text "SPRITES_EN[7..0]" (rect 0 0 81 12)(font "Arial" ))
+		(text "SPRITES_EN[7..0]" (rect 21 75 102 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
 		(pt 264 32)
 		(output)
-		(text "RGB[23..0]" (rect 0 0 46 12)(font "Arial" ))
-		(text "RGB[23..0]" (rect 197 27 243 39)(font "Arial" ))
-		(line (pt 264 32)(pt 248 32)(line_width 3))
+		(text "MEM_CLK" (rect 0 0 49 12)(font "Arial" ))
+		(text "MEM_CLK" (rect 194 27 243 39)(font "Arial" ))
+		(line (pt 264 32)(pt 248 32)(line_width 1))
 	)
 	(port
 		(pt 264 48)
 		(output)
-		(text "MEM_CLK" (rect 0 0 49 12)(font "Arial" ))
-		(text "MEM_CLK" (rect 194 43 243 55)(font "Arial" ))
-		(line (pt 264 48)(pt 248 48)(line_width 1))
+		(text "MEM_ADDR[15..0]" (rect 0 0 83 12)(font "Arial" ))
+		(text "MEM_ADDR[15..0]" (rect 160 43 243 55)(font "Arial" ))
+		(line (pt 264 48)(pt 248 48)(line_width 3))
 	)
 	(port
 		(pt 264 64)
 		(output)
-		(text "MEM_ADDR[15..0]" (rect 0 0 83 12)(font "Arial" ))
-		(text "MEM_ADDR[15..0]" (rect 160 59 243 71)(font "Arial" ))
+		(text "MEM_SEL[2..0]" (rect 0 0 68 12)(font "Arial" ))
+		(text "MEM_SEL[2..0]" (rect 175 59 243 71)(font "Arial" ))
 		(line (pt 264 64)(pt 248 64)(line_width 3))
 	)
+	(port
+		(pt 264 80)
+		(output)
+		(text "RGB[23..0]" (rect 0 0 46 12)(font "Arial" ))
+		(text "RGB[23..0]" (rect 197 75 243 87)(font "Arial" ))
+		(line (pt 264 80)(pt 248 80)(line_width 3))
+	)
+	(parameter
+		"BACKGROUND_MAX_ADDR"
+		"64800"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"BLUE_MAX_ADDR"
+		"14028"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"GREEN_MAX_ADDR"
+		"14112"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"RED_MAX_ADDR"
+		"14448"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"YELLOW_MAX_ADDR"
+		"14028"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"LOSE_MAX_ADDR"
+		"24120"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"WIN_MAX_ADDR"
+		"20880"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"PWR_MAX_ADDR"
+		"252"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"BACKGROUND_MEM_SEL"
+		"000"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"PWR_MEM_SEL"
+		"001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"RED_MEM_SEL"
+		"010"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"GREEN_MEM_SEL"
+		"011"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"BLUE_MEM_SEL"
+		"100"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"YELLOW_MEM_SEL"
+		"101"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"WIN_MEM_SEL"
+		"110"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"LOSE_MEM_SEL"
+		"111"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
 	(parameter
 		"INICIO"
 		"0"
@@ -100,11 +187,6 @@ refer to the applicable agreement for further details.
 	(parameter
 		"INCREMENTAR"
 		"5"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"MAX_ADDR"
-		"64800"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
