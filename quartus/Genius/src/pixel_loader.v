@@ -14,13 +14,13 @@ module pixel_loader
 );
 
   parameter   BACKGROUND_MAX_ADDR = 64800,    // 65536
-              BLUE_MAX_ADDR = 14028,          // 16384
+              BLUE_MAX_ADDR = 14112,          // 16384
               GREEN_MAX_ADDR = 14112,         // 16384
-              RED_MAX_ADDR = 14448,           // 16384
-              YELLOW_MAX_ADDR = 14028,        // 16384
-              LOSE_MAX_ADDR = 24120,          // 32768
-              WIN_MAX_ADDR = 20880,           // 32768
-              PWR_MAX_ADDR = 252;             // 256
+              RED_MAX_ADDR = 14112,           // 16384
+              YELLOW_MAX_ADDR = 14112,        // 16384
+              LOSE_MAX_ADDR = 25200,          // 32768
+              WIN_MAX_ADDR = 21600,           // 32768
+              PWR_MAX_ADDR = 200;             // 256
 
   parameter   BACKGROUND_MEM_SEL = 3'b000,
               PWR_MEM_SEL = 3'b001,
@@ -70,8 +70,8 @@ module pixel_loader
       lose_addr <= 0;
       win_addr <= 0;
       pwr_addr <= 0;
-
-    end else
+    end
+    else
     begin
       A_State <= F_State;
 
@@ -193,7 +193,25 @@ module pixel_loader
   // Memory selection
   always @*
   begin
-    if (BLUE_EN)
+    if (LOSE_EN) // upper priority
+    begin
+      MEM_SEL = LOSE_MEM_SEL;
+      max_addr = LOSE_MAX_ADDR;
+      r_addr = lose_addr;
+    end
+    else if (WIN_EN)
+    begin
+      MEM_SEL = WIN_MEM_SEL;
+      max_addr = WIN_MAX_ADDR;
+      r_addr = win_addr;
+    end
+    else if (PWR_EN)
+    begin
+      MEM_SEL = PWR_MEM_SEL;
+      max_addr = PWR_MAX_ADDR;
+      r_addr = pwr_addr;
+    end
+    else if (BLUE_EN)
     begin
       MEM_SEL = BLUE_MEM_SEL;
       max_addr = BLUE_MAX_ADDR;
@@ -211,29 +229,11 @@ module pixel_loader
       max_addr = RED_MAX_ADDR;
       r_addr = red_addr;
     end
-    else if (YELLOW_EN)
+    else if (YELLOW_EN) // lower priority
     begin
       MEM_SEL = YELLOW_MEM_SEL;
       max_addr = YELLOW_MAX_ADDR;
       r_addr = yellow_addr;
-    end
-    else if (LOSE_EN)
-    begin
-      MEM_SEL = LOSE_MEM_SEL;
-      max_addr = LOSE_MAX_ADDR;
-      r_addr = lose_addr;
-    end
-    else if (WIN_EN)
-    begin
-      MEM_SEL = WIN_MEM_SEL;
-      max_addr = WIN_MAX_ADDR;
-      r_addr = win_addr;
-    end
-    else if (PWR_EN)
-    begin
-      MEM_SEL = PWR_MEM_SEL;
-      max_addr = PWR_MAX_ADDR;
-      r_addr = pwr_addr;
     end
     else
     begin

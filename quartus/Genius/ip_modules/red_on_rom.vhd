@@ -65,7 +65,7 @@ BEGIN
 		intended_device_family => "Cyclone IV E",
 		lpm_hint => "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=RED",
 		lpm_type => "altsyncram",
-		numwords_a => 14448,
+		numwords_a => 14112,
 		operation_mode => "ROM",
 		outdata_aclr_a => "NONE",
 		outdata_reg_a => "UNREGISTERED",

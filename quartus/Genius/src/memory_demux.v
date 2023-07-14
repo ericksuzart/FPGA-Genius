@@ -21,14 +21,14 @@ module memory_demux
   output reg [15:0] OUT_PX,
 
   // ----- Adresses -----
-  output reg [15:0] BACKGROUND_ADDR,  // MAX = 360 x 360 / 2 = 64800
-  output reg [7:0]  POWER_BTN_ADDR,   // MAX = 22 x 21 / 2 = 231
-  output reg [13:0] RED_BTN_ADDR,     // MAX = 169 x 168 / 2 = 14196
-  output reg [13:0] GREEN_BTN_ADDR,   // MAX = 168 x 168 / 2 = 14112
-  output reg [13:0] BLUE_BTN_ADDR,    // MAX = 168 x 167 / 2 = 14028
-  output reg [13:0] YELLOW_BTN_ADDR,  // MAX = 168 x 167 / 2 = 14028
-  output reg [14:0] WIN_SCREEN_ADDR,  // MAX = 360 x 116 / 2 = 20880
-  output reg [14:0] LOSE_SCREEN_ADDR, // MAX = 360 x 134 / 2 = 24120
+  output reg [15:0] BACKGROUND_ADDR,  // MAX = 64800
+  output reg [7:0]  POWER_BTN_ADDR,   // MAX = 252
+  output reg [13:0] RED_BTN_ADDR,     // MAX = 14028
+  output reg [13:0] GREEN_BTN_ADDR,   // MAX = 14028
+  output reg [13:0] BLUE_BTN_ADDR,    // MAX = 14028
+  output reg [13:0] YELLOW_BTN_ADDR,  // MAX = 13944
+  output reg [14:0] WIN_SCREEN_ADDR,  // MAX = 20880
+  output reg [14:0] LOSE_SCREEN_ADDR, // MAX = 24120
 
   // ----- Clocks -----
   output reg BACKGROUND_CLK,
@@ -71,11 +71,18 @@ module memory_demux
     LOSE_SCREEN_CLK = 0;
 
     case (SELECTOR)
-      BACKGROUND:
+      LOSE_SCREEN: // highest priority
       begin
-        BACKGROUND_ADDR = IN_ADDR;
-        BACKGROUND_CLK = IN_CLK;
-        OUT_PX = BACKGROUND_PX;
+        LOSE_SCREEN_ADDR = IN_ADDR[14:0];
+        LOSE_SCREEN_CLK = IN_CLK;
+        OUT_PX = LOSE_SCREEN_PX;
+      end
+
+      WIN_SCREEN:
+      begin
+        WIN_SCREEN_ADDR = IN_ADDR[14:0];
+        WIN_SCREEN_CLK = IN_CLK;
+        OUT_PX = WIN_SCREEN_PX;
       end
 
       POWER_BTN_ON:
@@ -113,18 +120,11 @@ module memory_demux
         OUT_PX = YELLOW_BTN_PX;
       end
 
-      WIN_SCREEN:
+      BACKGROUND: // lowest priority
       begin
-        WIN_SCREEN_ADDR = IN_ADDR[14:0];
-        WIN_SCREEN_CLK = IN_CLK;
-        OUT_PX = WIN_SCREEN_PX;
-      end
-
-      LOSE_SCREEN:
-      begin
-        LOSE_SCREEN_ADDR = IN_ADDR[14:0];
-        LOSE_SCREEN_CLK = IN_CLK;
-        OUT_PX = LOSE_SCREEN_PX;
+        BACKGROUND_ADDR = IN_ADDR;
+        BACKGROUND_CLK = IN_CLK;
+        OUT_PX = BACKGROUND_PX;
       end
     endcase
   end
