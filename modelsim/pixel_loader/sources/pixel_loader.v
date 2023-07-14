@@ -62,7 +62,6 @@ module pixel_loader
     if (RESET)
     begin
       A_State <= INICIO;
-      // r_addr <= 0;
       background_addr <= 0;
       blue_addr <= 0;
       green_addr <= 0;

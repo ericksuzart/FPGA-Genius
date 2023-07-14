@@ -16,8 +16,8 @@ module VGA_controller
   // Game I/O
   input [6:0] SPRITES_FLAGS,  // Flags for 7 sprites
   output [7:0] SPRITES_EN,     // Flags for all 8 sprites
-  output [10:0] X,            // X coordinate
-  output [10:0] Y             // Y coordinate
+  output [9:0] X,            // X coordinate
+  output [9:0] Y             // Y coordinate
 );
 
 // VGA timings:
@@ -112,8 +112,6 @@ parameter PWR_Y =  197;         // Vertical start position in the screen.
 // Registers for storing the horizontal & vertical counters.
 reg [9:0] h_c;
 reg [9:0] v_c;
-//wire [9:0] X;         // X coordinate.
-//wire [9:0] Y;         // Y coordinate.
 
 wire DISP_EN, BACKGROUND_EN, BLUE_EN, GREEN_EN, RED_EN, YELLOW_EN, LOSE_EN, WIN_EN, PWR_EN;
 
