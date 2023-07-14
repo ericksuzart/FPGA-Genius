@@ -38,7 +38,7 @@ refer to the applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect -64 -760 104 -744)
+	(rect -80 -768 88 -752)
 	(text "INPUT" (rect 125 0 158 10)(font "Arial" (font_size 6)))
 	(text "SW[7]" (rect 5 0 38 11)(font "Arial" ))
 	(pt 168 8)
@@ -51,13 +51,13 @@ refer to the applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "GND" (rect 128 7 151 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect -136 -760 -64 -744))
+	(annotation_block (location)(rect -152 -768 -80 -752))
 )
 (pin
 	(input)
-	(rect 392 -344 560 -328)
+	(rect 120 -296 288 -280)
 	(text "INPUT" (rect 125 0 158 10)(font "Arial" (font_size 6)))
-	(text "SW[6..0]" (rect 5 0 54 11)(font "Arial" ))
+	(text "SW[6..0]" (rect 5 0 53 11)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -68,7 +68,7 @@ refer to the applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "GND" (rect 128 7 151 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 328 -344 392 -232))
+	(annotation_block (location)(rect 56 -296 120 -184))
 )
 (pin
 	(output)
@@ -188,23 +188,6 @@ refer to the applicable agreement for further details.
 		(line (pt 78 12)(pt 82 8))
 	)
 	(annotation_block (location)(rect 952 -720 1008 -704))
-)
-(pin
-	(output)
-	(rect -40 -480 136 -464)
-	(text "OUTPUT" (rect 133 0 175 10)(font "Arial" (font_size 6)))
-	(text "c1" (rect 74 0 86 11)(font "Arial" ))
-	(pt 176 8)
-	(drawing
-		(line (pt 176 8)(pt 124 8))
-		(line (pt 124 4)(pt 98 4))
-		(line (pt 124 12)(pt 98 12))
-		(line (pt 124 12)(pt 124 4))
-		(line (pt 98 4)(pt 94 8))
-		(line (pt 94 8)(pt 98 12))
-		(line (pt 98 12)(pt 94 8))
-	)
-	(flipy)
 )
 (symbol
 	(rect -136 -664 136 -504)
@@ -809,6 +792,64 @@ refer to the applicable agreement for further details.
 	)
 	(flipy)
 )
+(symbol
+	(rect 344 -336 528 -256)
+	(text "debouncers" (rect 5 0 72 11)(font "Arial" ))
+	(text "inst5" (rect 8 64 35 77)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk_2k" (rect 0 0 36 11)(font "Arial" ))
+		(text "clk_2k" (rect 21 27 57 38)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "buttons[6..0]" (rect 0 0 71 11)(font "Arial" ))
+		(text "buttons[6..0]" (rect 21 43 92 54)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 184 32)
+		(output)
+		(text "out[6..0]" (rect 0 0 47 11)(font "Arial" ))
+		(text "out[6..0]" (rect 124 27 171 38)(font "Arial" ))
+		(line (pt 184 32)(pt 168 32)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 168 64))
+	)
+)
+(symbol
+	(rect 232 -808 368 -728)
+	(text "debouncer" (rect 5 0 66 11)(font "Arial" ))
+	(text "inst6" (rect 8 64 36 77)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk_2k" (rect 0 0 36 11)(font "Arial" ))
+		(text "clk_2k" (rect 21 27 57 38)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "button" (rect 0 0 35 11)(font "Arial" ))
+		(text "button" (rect 21 43 56 54)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 136 32)
+		(output)
+		(text "out" (rect 0 0 18 11)(font "Arial" ))
+		(text "out" (rect 100 27 118 38)(font "Arial" ))
+		(line (pt 136 32)(pt 120 32))
+	)
+	(drawing
+		(rectangle (rect 16 16 120 64))
+	)
+)
 (connector
 	(pt 1008 -632)
 	(pt 1144 -632)
@@ -879,10 +920,6 @@ refer to the applicable agreement for further details.
 )
 (connector
 	(pt 696 -616)
-	(pt 696 -696)
-)
-(connector
-	(pt 288 -696)
 	(pt 696 -696)
 )
 (connector
@@ -957,14 +994,6 @@ refer to the applicable agreement for further details.
 	(pt 272 -680)
 )
 (connector
-	(pt 288 -752)
-	(pt 104 -752)
-)
-(connector
-	(pt 288 -752)
-	(pt 288 -696)
-)
-(connector
 	(pt 288 -696)
 	(pt 288 -648)
 )
@@ -989,16 +1018,6 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 712 -584)
-	(pt 712 -336)
-	(bus)
-)
-(connector
-	(pt 712 -336)
-	(pt 560 -336)
-	(bus)
-)
-(connector
 	(pt 136 -600)
 	(pt 152 -600)
 )
@@ -1015,17 +1034,65 @@ refer to the applicable agreement for further details.
 	(pt 776 -712)
 )
 (connector
+	(pt 712 -584)
+	(pt 712 -304)
+	(bus)
+)
+(connector
+	(pt 152 -584)
+	(pt 152 -304)
+)
+(connector
+	(pt 152 -304)
+	(pt 344 -304)
+)
+(connector
+	(pt 528 -304)
+	(pt 712 -304)
+	(bus)
+)
+(connector
+	(pt 288 -288)
+	(pt 344 -288)
+	(bus)
+)
+(connector
 	(pt 136 -584)
 	(pt 152 -584)
 )
 (connector
-	(pt 136 -472)
-	(pt 152 -472)
+	(pt 152 -584)
+	(pt 168 -584)
 )
 (connector
-	(pt 152 -584)
-	(pt 152 -472)
+	(pt 168 -776)
+	(pt 232 -776)
 )
-(junction (pt 288 -696))
+(connector
+	(pt 168 -584)
+	(pt 168 -776)
+)
+(connector
+	(pt 416 -776)
+	(pt 368 -776)
+)
+(connector
+	(pt 416 -696)
+	(pt 416 -776)
+)
+(connector
+	(pt 88 -760)
+	(pt 232 -760)
+)
+(connector
+	(pt 288 -696)
+	(pt 416 -696)
+)
+(connector
+	(pt 416 -696)
+	(pt 696 -696)
+)
 (junction (pt 712 -712))
 (junction (pt -152 -680))
+(junction (pt 152 -584))
+(junction (pt 416 -696))

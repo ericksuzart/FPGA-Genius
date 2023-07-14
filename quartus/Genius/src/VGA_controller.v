@@ -190,17 +190,7 @@ assign PWR_EN = (X >= PWR_X &&
                  Y >= PWR_Y &&
                  Y < PWR_Y + PWR_VS)? SPRITES_FLAGS[6]:0;
 
-
-// Assign the flags for the display of the sprites, is clocked by VGA_CLK
-// due to some timing issues.
-// always @(posedge VGA_CLK)
-// begin
-//   if (RESET)
-//     SPRITES_EN <= 0;
-//   else
-// end
 assign SPRITES_EN = {BACKGROUND_EN, BLUE_EN, GREEN_EN, RED_EN, YELLOW_EN, LOSE_EN, WIN_EN, PWR_EN};
-
 assign VGA_R = (DISP_EN)?  RGB[23:16] : 0;
 assign VGA_G = (DISP_EN)?  RGB[15:8]  : 0;
 assign VGA_B = (DISP_EN)?  RGB[7:0]   : 0;

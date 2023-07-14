@@ -169,6 +169,9 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[7]
 set_global_assignment -name SMART_RECOMPILE ON
 set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS ON
 set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
+set_global_assignment -name OPTIMIZATION_MODE BALANCED
+set_global_assignment -name VERILOG_FILE src/debouncers.v
+set_global_assignment -name VERILOG_FILE src/debouncer.v
 set_global_assignment -name VHDL_FILE ip_modules/blue_on_rom.vhd
 set_global_assignment -name VHDL_FILE ip_modules/background_rom.vhd
 set_global_assignment -name VHDL_FILE ip_modules/PLL.vhd
