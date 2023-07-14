@@ -22,6 +22,9 @@ module genius_top_level_tb;
   wire [7:0] VGA_B;
   wire [7:0] VGA_G;
   wire [7:0] VGA_R;
+  wire [7:0] SPRITES_EN;
+
+  assign SPRITES_EN = {BLUE_EN,GREEN_EN,RED_EN,YELLOW_EN,LOSE_EN,WIN_EN,PWR_EN};
 
   // Instantiate the module under test
   genius_top_level uut (
@@ -117,6 +120,8 @@ module genius_top_level_tb;
     PWR_EN = 0;
 
     #500;
+    countPulses();
+	
     $stop;
   end
   task countPulses;

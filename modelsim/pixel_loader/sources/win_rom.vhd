@@ -61,11 +61,11 @@ BEGIN
 		address_aclr_a => "NONE",
 		clock_enable_input_a => "BYPASS",
 		clock_enable_output_a => "BYPASS",
-		init_file => "/home/erick/shared/FPGA-Genius/modelsim/memory_block/mem_init/win.hex",
+		init_file => "/home/erick/shared/FPGA-Genius/modelsim/pixel_loader/mem_init/win.hex",
 		intended_device_family => "Cyclone IV E",
 		lpm_hint => "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=WIN",
 		lpm_type => "altsyncram",
-		numwords_a => 418,
+		numwords_a => 21600,
 		operation_mode => "ROM",
 		outdata_aclr_a => "NONE",
 		outdata_reg_a => "UNREGISTERED",
@@ -103,7 +103,7 @@ END SYN;
 -- Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "1"
 -- Retrieval info: PRIVATE: JTAG_ID STRING "WIN"
 -- Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
--- Retrieval info: PRIVATE: MIFfilename STRING "/home/erick/shared/FPGA-Genius/modelsim/memory_block/mem_init/win.hex"
+-- Retrieval info: PRIVATE: MIFfilename STRING "/home/erick/shared/FPGA-Genius/modelsim/pixel_loader/mem_init/win.hex"
 -- Retrieval info: PRIVATE: NUMWORDS_A NUMERIC "20880"
 -- Retrieval info: PRIVATE: RAM_BLOCK_TYPE NUMERIC "0"
 -- Retrieval info: PRIVATE: RegAddr NUMERIC "1"
@@ -118,7 +118,7 @@ END SYN;
 -- Retrieval info: CONSTANT: ADDRESS_ACLR_A STRING "NONE"
 -- Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING "BYPASS"
 -- Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_A STRING "BYPASS"
--- Retrieval info: CONSTANT: INIT_FILE STRING "/home/erick/shared/FPGA-Genius/modelsim/memory_block/mem_init/win.hex"
+-- Retrieval info: CONSTANT: INIT_FILE STRING "/home/erick/shared/FPGA-Genius/modelsim/pixel_loader/mem_init/win.hex"
 -- Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone IV E"
 -- Retrieval info: CONSTANT: LPM_HINT STRING "ENABLE_RUNTIME_MOD=YES,INSTANCE_NAME=WIN"
 -- Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"

@@ -67,47 +67,47 @@ parameter BACKGROUND_VS = 360;    // Vertical size.
 parameter BACKGROUND_X =  120;    // Horizontal start position in the screen.
 parameter BACKGROUND_Y =  60;     // Vertical start position in the screen.
 
-// Blue button
-parameter BLUE_HS = 168;          // Horizontal size.
-parameter BLUE_VS = 167;          // Vertical size.
-parameter BLUE_X =  192;          // Horizontal start position in the screen.
-parameter BLUE_Y =  193;          // Vertical start position in the screen.
+// Blue button ok
+parameter BLUE_HS = 168;
+parameter BLUE_VS = 168;
+parameter BLUE_X =  191;  // (or 190, or 1)
+parameter BLUE_Y =  191;  // (or 190 or 1)
 
-// Green button
-parameter GREEN_HS = 168;       // Horizontal size.
-parameter GREEN_VS = 168;       // Vertical size.
-parameter GREEN_X =  0;         // Horizontal start position in the screen.
-parameter GREEN_Y =  0;         // Vertical start position in the screen.
+// Green button ok
+parameter GREEN_HS = 168;
+parameter GREEN_VS = 168;
+parameter GREEN_X =  1; // (or 190)
+parameter GREEN_Y =  1; // (or 190)
 
-// Red button
-parameter RED_HS = 169;         // Horizontal size.
-parameter RED_VS = 168;         // Vertical size.
-parameter RED_X =  191;         // Horizontal start position in the screen.
-parameter RED_Y =  0;           // Vertical start position in the screen.
+// Red button ok
+parameter RED_HS = 168;
+parameter RED_VS = 168;
+parameter RED_X =  191; // (or 190, or 1)
+parameter RED_Y =  1; // (or 190)
 
-// Yellow button
-parameter YELLOW_HS = 168;      // Horizontal size.
-parameter YELLOW_VS = 167;      // Vertical size.
-parameter YELLOW_X =  0;        // Horizontal start position in the screen.
-parameter YELLOW_Y =  192;      // Vertical start position in the screen.
+// Yellow button ok
+parameter YELLOW_HS = 168;
+parameter YELLOW_VS = 168;
+parameter YELLOW_X =  1;
+parameter YELLOW_Y =  191; // (or 190, or 1)
 
 // Lose button
-parameter LOSE_HS = 360;        // Horizontal size.
-parameter LOSE_VS = 134;        // Vertical size.
-parameter LOSE_X =  0;          // Horizontal start position in the screen.
-parameter LOSE_Y =  113;        // Vertical start position in the screen.
+parameter LOSE_HS = 360;
+parameter LOSE_VS = 140;
+parameter LOSE_X =  0; // (or 190)
+parameter LOSE_Y =  110;
 
 // Win button
-parameter WIN_HS = 360;         // Horizontal size.
-parameter WIN_VS = 116;         // Vertical size.
-parameter WIN_X =  0;           // Horizontal start position in the screen.
-parameter WIN_Y =  122;         // Vertical start position in the screen.
+parameter WIN_HS = 360;
+parameter WIN_VS = 120;
+parameter WIN_X =  0;
+parameter WIN_Y =  120;
 
-// Power button
-parameter PWR_HS = 22;          // Horizontal size.
-parameter PWR_VS = 21;          // Vertical size.
-parameter PWR_X =  169;         // Horizontal start position in the screen.
-parameter PWR_Y =  197;         // Vertical start position in the screen.
+// Power button ok
+parameter PWR_HS = 20;
+parameter PWR_VS = 20;
+parameter PWR_X =  170; // or 169
+parameter PWR_Y =  198; // or 197
 
 // Registers for storing the horizontal & vertical counters.
 reg [9:0] h_c;
@@ -149,50 +149,48 @@ assign DISP_EN = (h_c >= BACKGROUND_X + H_OFF &&
                   v_c >= BACKGROUND_Y + V_OFF &&
                   v_c < BACKGROUND_Y + V_OFF + BACKGROUND_VS)? 1:0;
 
-assign X = (DISP_EN)? h_c - BACKGROUND_X - H_OFF : -1;
-assign Y = (DISP_EN)? v_c - BACKGROUND_Y - V_OFF : -1;
+assign X = (DISP_EN)? h_c - BACKGROUND_X - H_OFF - 1: -1;
+assign Y = (DISP_EN)? v_c - BACKGROUND_Y - V_OFF - 1: -1;
 
 // Assign the flags for the display of the buttons
 assign BACKGROUND_EN = DISP_EN;
 
 assign BLUE_EN = (X >= BLUE_X &&
-                  X <= BLUE_X + BLUE_HS &&
+                  X < BLUE_X + BLUE_HS &&
                   Y >= BLUE_Y &&
-                  Y <= BLUE_Y + BLUE_VS)? SPRITES_FLAGS[0]:0;
+                  Y < BLUE_Y + BLUE_VS)? SPRITES_FLAGS[0]:0;
 
 assign GREEN_EN = (X >= GREEN_X &&
-                   X <= GREEN_X + GREEN_HS &&
+                   X < GREEN_X + GREEN_HS &&
                    Y >= GREEN_Y &&
-                   Y <= GREEN_Y + GREEN_VS)? SPRITES_FLAGS[1]:0;
+                   Y < GREEN_Y + GREEN_VS)? SPRITES_FLAGS[1]:0;
 
 assign RED_EN = (X >= RED_X &&
-                 X <= RED_X + RED_HS &&
+                 X < RED_X + RED_HS &&
                  Y >= RED_Y &&
-                 Y <= RED_Y + RED_VS)? SPRITES_FLAGS[2]:0;
+                 Y < RED_Y + RED_VS)? SPRITES_FLAGS[2]:0;
 
 assign YELLOW_EN = (X >= YELLOW_X &&
-                    X <= YELLOW_X + YELLOW_HS &&
+                    X < YELLOW_X + YELLOW_HS &&
                     Y >= YELLOW_Y &&
-                    Y <= YELLOW_Y + YELLOW_VS)? SPRITES_FLAGS[3]:0;
+                    Y < YELLOW_Y + YELLOW_VS)? SPRITES_FLAGS[3]:0;
 
 assign LOSE_EN = (X >= LOSE_X &&
-                  X <= LOSE_X + LOSE_HS &&
+                  X < LOSE_X + LOSE_HS &&
                   Y >= LOSE_Y &&
-                  Y <= LOSE_Y + LOSE_VS)? SPRITES_FLAGS[4]:0;
+                  Y < LOSE_Y + LOSE_VS)? SPRITES_FLAGS[4]:0;
 
 assign WIN_EN = (X >= WIN_X &&
-                 X <= WIN_X + WIN_HS &&
+                 X < WIN_X + WIN_HS &&
                  Y >= WIN_Y &&
-                 Y <= WIN_Y + WIN_VS)? SPRITES_FLAGS[5]:0;
+                 Y < WIN_Y + WIN_VS)? SPRITES_FLAGS[5]:0;
 
 assign PWR_EN = (X >= PWR_X &&
-                 X <= PWR_X + PWR_HS &&
+                 X < PWR_X + PWR_HS &&
                  Y >= PWR_Y &&
-                 Y <= PWR_Y + PWR_VS)? SPRITES_FLAGS[6]:0;
+                 Y < PWR_Y + PWR_VS)? SPRITES_FLAGS[6]:0;
 
-// Assign the bus for the enable signals
 assign SPRITES_EN = {BACKGROUND_EN, BLUE_EN, GREEN_EN, RED_EN, YELLOW_EN, LOSE_EN, WIN_EN, PWR_EN};
-
 assign VGA_R = (DISP_EN)?  RGB[23:16] : 0;
 assign VGA_G = (DISP_EN)?  RGB[15:8]  : 0;
 assign VGA_B = (DISP_EN)?  RGB[7:0]   : 0;
