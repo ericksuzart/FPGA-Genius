@@ -52,7 +52,7 @@ module remote_control (clk, rst, irda, rdy, buttons, color);
 
         s2:
         begin
-          if (count < 10) 
+          if (count < 193) 
             state <= s2;
           else 
             state <= s3;
@@ -63,7 +63,7 @@ module remote_control (clk, rst, irda, rdy, buttons, color);
 		  end
 		  s4:
 		  begin
-		  if (count < 20) 
+		  if (count < 234) 
             state <= s4;
           else 
             state <= s5;
@@ -74,7 +74,7 @@ module remote_control (clk, rst, irda, rdy, buttons, color);
 		  end
 		  s6:
 		  begin
-		  if (count < 35) 
+		  if (count < 254) 
             state <= s6;
           else 
             state <= s7;
