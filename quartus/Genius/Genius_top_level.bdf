@@ -72,7 +72,7 @@ refer to the applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 1144 -640 1320 -624)
+	(rect 1144 -648 1320 -632)
 	(text "OUTPUT" (rect 1 0 43 10)(font "Arial" (font_size 6)))
 	(text "VGA_HS" (rect 90 0 136 11)(font "Arial" ))
 	(pt 0 8)
@@ -85,11 +85,11 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1320 -640 1384 -624))
+	(annotation_block (location)(rect 1320 -648 1384 -632))
 )
 (pin
 	(output)
-	(rect 1144 -624 1320 -608)
+	(rect 1144 -632 1320 -616)
 	(text "OUTPUT" (rect 1 0 43 10)(font "Arial" (font_size 6)))
 	(text "VGA_VS" (rect 90 0 134 11)(font "Arial" ))
 	(pt 0 8)
@@ -102,11 +102,11 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1320 -624 1376 -608))
+	(annotation_block (location)(rect 1320 -632 1376 -616))
 )
 (pin
 	(output)
-	(rect 1144 -608 1322 -592)
+	(rect 1144 -616 1322 -600)
 	(text "OUTPUT" (rect 1 0 43 10)(font "Arial" (font_size 6)))
 	(text "VGA_BLANK_N" (rect 90 0 172 11)(font "Arial" ))
 	(pt 0 8)
@@ -119,11 +119,11 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1322 -608 1378 -592))
+	(annotation_block (location)(rect 1322 -616 1378 -600))
 )
 (pin
 	(output)
-	(rect 1144 -592 1320 -576)
+	(rect 1144 -600 1320 -584)
 	(text "OUTPUT" (rect 1 0 43 10)(font "Arial" (font_size 6)))
 	(text "VGA_R[7..0]" (rect 90 0 157 11)(font "Arial" ))
 	(pt 0 8)
@@ -136,11 +136,11 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1320 -592 1384 -576))
+	(annotation_block (location)(rect 1320 -600 1384 -584))
 )
 (pin
 	(output)
-	(rect 1144 -576 1320 -560)
+	(rect 1144 -584 1320 -568)
 	(text "OUTPUT" (rect 1 0 43 10)(font "Arial" (font_size 6)))
 	(text "VGA_G[7..0]" (rect 90 0 158 11)(font "Arial" ))
 	(pt 0 8)
@@ -153,11 +153,11 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1320 -576 1376 -560))
+	(annotation_block (location)(rect 1320 -584 1376 -568))
 )
 (pin
 	(output)
-	(rect 1144 -560 1320 -544)
+	(rect 1144 -568 1320 -552)
 	(text "OUTPUT" (rect 1 0 43 10)(font "Arial" (font_size 6)))
 	(text "VGA_B[7..0]" (rect 90 0 157 11)(font "Arial" ))
 	(pt 0 8)
@@ -170,7 +170,7 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1320 -560 1384 -544))
+	(annotation_block (location)(rect 1320 -568 1384 -552))
 )
 (pin
 	(output)
@@ -430,7 +430,7 @@ refer to the applicable agreement for further details.
 	(annotation_block (parameter)(rect 576 -800 792 -680))
 )
 (symbol
-	(rect 728 -664 1008 -488)
+	(rect 728 -672 1008 -496)
 	(text "VGA_controller" (rect 5 0 89 11)(font "Arial" ))
 	(text "inst" (rect 8 160 30 171)(font "Arial" ))
 	(port
@@ -753,7 +753,7 @@ refer to the applicable agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 264 160))
 	)
-	(annotation_block (parameter)(rect 952 -920 1144 -664))
+	(annotation_block (parameter)(rect 952 -928 1144 -672))
 )
 (symbol
 	(rect 312 -456 560 -360)
@@ -850,32 +850,27 @@ refer to the applicable agreement for further details.
 		(rectangle (rect 16 16 120 64))
 	)
 )
-(connector
-	(pt 1008 -632)
-	(pt 1144 -632)
-)
-(connector
-	(pt 1008 -616)
-	(pt 1144 -616)
-)
-(connector
-	(pt 1008 -600)
-	(pt 1144 -600)
-)
-(connector
-	(pt 1008 -584)
-	(pt 1144 -584)
-	(bus)
-)
-(connector
-	(pt 1008 -568)
-	(pt 1144 -568)
-	(bus)
-)
-(connector
-	(pt 1008 -552)
-	(pt 1144 -552)
-	(bus)
+(symbol
+	(rect -48 -920 152 -840)
+	(text "pixel_decoder" (rect 5 0 85 11)(font "Arial" ))
+	(text "inst7" (rect 8 64 35 77)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "CODE[7..0]" (rect 0 0 64 11)(font "Arial" ))
+		(text "CODE[7..0]" (rect 21 27 85 38)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 200 32)
+		(output)
+		(text "RGB[23..0]" (rect 0 0 62 11)(font "Arial" ))
+		(text "RGB[23..0]" (rect 127 27 189 38)(font "Arial" ))
+		(line (pt 200 32)(pt 184 32)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 184 64))
+	)
 )
 (connector
 	(pt 288 -648)
@@ -904,23 +899,6 @@ refer to the applicable agreement for further details.
 	(pt 576 -616)
 	(pt 592 -616)
 	(bus)
-)
-(connector
-	(pt 576 -600)
-	(pt 728 -600)
-	(bus)
-)
-(connector
-	(pt 728 -616)
-	(pt 696 -616)
-)
-(connector
-	(pt 728 -632)
-	(pt 712 -632)
-)
-(connector
-	(pt 696 -616)
-	(pt 696 -696)
 )
 (connector
 	(pt 296 -600)
@@ -978,10 +956,6 @@ refer to the applicable agreement for further details.
 	(pt 272 -680)
 )
 (connector
-	(pt 712 -712)
-	(pt 712 -632)
-)
-(connector
 	(pt -152 -680)
 	(pt -152 -600)
 )
@@ -998,23 +972,8 @@ refer to the applicable agreement for further details.
 	(pt 288 -648)
 )
 (connector
-	(pt 1008 -536)
-	(pt 1024 -536)
-	(bus)
-)
-(connector
-	(pt 1024 -536)
-	(pt 1024 -472)
-	(bus)
-)
-(connector
 	(pt 296 -472)
 	(pt 1024 -472)
-	(bus)
-)
-(connector
-	(pt 728 -584)
-	(pt 712 -584)
 	(bus)
 )
 (connector
@@ -1024,19 +983,6 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 152 -600)
 	(pt 152 -712)
-)
-(connector
-	(pt 152 -712)
-	(pt 712 -712)
-)
-(connector
-	(pt 712 -712)
-	(pt 776 -712)
-)
-(connector
-	(pt 712 -584)
-	(pt 712 -304)
-	(bus)
 )
 (connector
 	(pt 152 -584)
@@ -1091,6 +1037,92 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 416 -696)
 	(pt 696 -696)
+)
+(connector
+	(pt 584 -600)
+	(pt 584 -608)
+	(bus)
+)
+(connector
+	(pt 576 -600)
+	(pt 584 -600)
+	(bus)
+)
+(connector
+	(pt 584 -608)
+	(pt 728 -608)
+	(bus)
+)
+(connector
+	(pt 696 -624)
+	(pt 728 -624)
+)
+(connector
+	(pt 712 -640)
+	(pt 728 -640)
+)
+(connector
+	(pt 696 -696)
+	(pt 696 -624)
+)
+(connector
+	(pt 712 -712)
+	(pt 712 -640)
+)
+(connector
+	(pt 1024 -544)
+	(pt 1008 -544)
+	(bus)
+)
+(connector
+	(pt 1024 -472)
+	(pt 1024 -544)
+	(bus)
+)
+(connector
+	(pt 712 -592)
+	(pt 728 -592)
+	(bus)
+)
+(connector
+	(pt 712 -304)
+	(pt 712 -592)
+	(bus)
+)
+(connector
+	(pt 152 -712)
+	(pt 712 -712)
+)
+(connector
+	(pt 712 -712)
+	(pt 776 -712)
+)
+(connector
+	(pt 1008 -640)
+	(pt 1144 -640)
+)
+(connector
+	(pt 1008 -624)
+	(pt 1144 -624)
+)
+(connector
+	(pt 1008 -608)
+	(pt 1144 -608)
+)
+(connector
+	(pt 1008 -592)
+	(pt 1144 -592)
+	(bus)
+)
+(connector
+	(pt 1008 -576)
+	(pt 1144 -576)
+	(bus)
+)
+(connector
+	(pt 1008 -560)
+	(pt 1144 -560)
+	(bus)
 )
 (junction (pt 712 -712))
 (junction (pt -152 -680))

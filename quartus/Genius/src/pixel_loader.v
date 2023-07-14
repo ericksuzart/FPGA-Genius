@@ -97,8 +97,6 @@ module pixel_loader
 
       if (F_State == INICIO)
       begin
-        if (BACKGROUND_EN)
-          background_addr <= 0;
         if (BLUE_EN)
           blue_addr <= 0;
         if (GREEN_EN)
@@ -113,6 +111,8 @@ module pixel_loader
           win_addr <= 0;
         if (PWR_EN)
           pwr_addr <= 0;
+        if (BACKGROUND_EN)
+          background_addr <= 0;
       end
     end
   end

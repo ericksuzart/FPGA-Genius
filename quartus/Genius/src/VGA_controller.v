@@ -68,44 +68,44 @@ parameter BACKGROUND_Y =  60;     // Vertical start position in the screen.
 // Blue button ok
 parameter BLUE_HS = 168;
 parameter BLUE_VS = 168;
-parameter BLUE_X =  191;  // (or 190, or 1)
-parameter BLUE_Y =  191;  // (or 190 or 1)
+parameter BLUE_X =  190;
+parameter BLUE_Y =  190;
 
 // Green button ok
 parameter GREEN_HS = 168;
 parameter GREEN_VS = 168;
-parameter GREEN_X =  1; // (or 190)
-parameter GREEN_Y =  1; // (or 190)
+parameter GREEN_X =  0;
+parameter GREEN_Y =  0;
 
 // Red button ok
 parameter RED_HS = 168;
 parameter RED_VS = 168;
-parameter RED_X =  191; // (or 190, or 1)
-parameter RED_Y =  1; // (or 190)
+parameter RED_X =  190;
+parameter RED_Y =  0;
 
 // Yellow button ok
 parameter YELLOW_HS = 168;
 parameter YELLOW_VS = 168;
-parameter YELLOW_X =  1;
-parameter YELLOW_Y =  191; // (or 190, or 1)
+parameter YELLOW_X =  0;
+parameter YELLOW_Y =  190;
 
 // Lose button
 parameter LOSE_HS = 360;
 parameter LOSE_VS = 140;
-parameter LOSE_X =  0; // (or 190)
-parameter LOSE_Y =  110;
+parameter LOSE_X =  0;
+parameter LOSE_Y =  109;
 
 // Win button
 parameter WIN_HS = 360;
 parameter WIN_VS = 120;
 parameter WIN_X =  0;
-parameter WIN_Y =  120;
+parameter WIN_Y =  119;
 
 // Power button ok
-parameter PWR_HS = 20;
-parameter PWR_VS = 20;
-parameter PWR_X =  170; // or 169
-parameter PWR_Y =  198; // or 197
+parameter PWR_HS = 21;
+parameter PWR_VS = 21;
+parameter PWR_X =  169;
+parameter PWR_Y =  197;
 
 // Registers for storing the horizontal & vertical counters.
 reg [9:0] h_c;
@@ -153,7 +153,8 @@ assign X = (DISP_EN)? h_c - BACKGROUND_X - H_OFF : -1;
 assign Y = (DISP_EN)? v_c - BACKGROUND_Y - V_OFF : -1;
 
 // Assign the flags for the display of the buttons
-assign BACKGROUND_EN = DISP_EN;
+assign BACKGROUND_EN = (X >= 0 && X < BACKGROUND_HS &&
+                        Y >= 0 && Y < BACKGROUND_VS)? 1:0;
 
 assign BLUE_EN = (X >= BLUE_X &&
                   X < BLUE_X + BLUE_HS &&
