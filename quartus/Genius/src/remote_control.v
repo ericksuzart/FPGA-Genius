@@ -117,6 +117,7 @@ module remote_control (clk, rst, irda, rdy, buttons, color);
 			count = 32'bx;
 			count_c = 0;
 			buttons = 3'bxxx;
+			rdy = 1'b0;
 		end
       s1: begin
 			count = 0;
