@@ -25,9 +25,6 @@ module controle_IR (rst, clk, irda, color, rdy, buttons, b_power, b_blue, b_yell
 				 S10 = 4'b1011,
 				 S11= 4'b1100;
 				 
-	/*parameter pos_1 = 8'b11000001,
-				 pos_2 = 8'b11101010,	
-				 pos_3 = 8'b11111110;*/
 				 
 	reg [3:0] state;
 	reg [3:0] next_state;
@@ -77,10 +74,16 @@ module controle_IR (rst, clk, irda, color, rdy, buttons, b_power, b_blue, b_yell
 				color = 2'b00;
 				buttons = 3'bxxx; 
 				rdy = 1'b0;
+				b_blue = 1'b0;
+				b_green = 1'b0;
+				b_red = 1'b0;
+				b_yellow = 1'b0;
+				b_power = 1'b0;
 			end 
 			else begin
 				case (state)
-
+	
+					
 					START: begin			
 						color = 2'b00;
 						buttons = 3'bxxx; 
@@ -91,48 +94,139 @@ module controle_IR (rst, clk, irda, color, rdy, buttons, b_power, b_blue, b_yell
 						b_yellow = 1'b0;
 						b_power = 1'b0;
 					end
-
+					
 					S0: begin			
 						color = counter_random;
+						buttons = buttons; 
+						rdy = 1'b0;
+						b_blue = 1'b0;
+						b_green = 1'b0;
+						b_red = 1'b0;
+						b_yellow = 1'b0;
+						b_power = 1'b0;
 					end
 						
 					S3: begin
+						color = counter_random;
 						buttons = {irda, buttons[2:1]}; 
+						rdy = 1'b0;
+						b_blue = 1'b0;
+						b_green = 1'b0;
+						b_red = 1'b0;
+						b_yellow = 1'b0;
+						b_power = 1'b0;
 					end
 						
 					S5: begin
+						color = counter_random;
 						buttons = {buttons[2], irda, buttons[1]};
+						rdy = 1'b0;
+						b_blue = 1'b0;
+						b_green = 1'b0;
+						b_red = 1'b0;
+						b_yellow = 1'b0;
+						b_power = 1'b0;
 					end
 										
 					S7: begin
+						color = counter_random;
 						buttons = {buttons[2:1], irda};
+						rdy = 1'b0;
+						b_blue = 1'b0;
+						b_green = 1'b0;
+						b_red = 1'b0;
+						b_yellow = 1'b0;
+						b_power = 1'b0;
 					end
 					
 					S8: begin
 						rdy = 1'b1;
+						color = counter_random;
+						buttons = buttons; 
+						
+						
 						if (buttons == 3'b100) begin
-						b_blue = 1'b1;
+							b_blue = 1'b1;
+							b_green = 1'b0;
+							b_red = 1'b0;
+							b_yellow = 1'b0;
+							b_power = 1'b0;
 						end else if (buttons == 3'b011) begin
-						b_red = 1'b1;
+							b_blue = 1'b0;
+							b_green = 1'b0;
+							b_red = 1'b1;
+							b_yellow = 1'b0;
+							b_power = 1'b0;
 						end else if (buttons == 3'b110) begin
-						b_yellow = 1'b1;
+							b_blue = 1'b0;
+							b_green = 1'b0;
+							b_red = 1'b0;
+							b_yellow = 1'b1;
+							b_power = 1'b0;
+							
 						end else if (buttons == 3'b010) begin
-						b_green = 1'b1;
+							b_blue = 1'b0;
+							b_green = 1'b1;
+							b_red = 1'b0;
+							b_yellow = 1'b0;
+							b_power = 1'b0;
 						end else if (buttons == 3'b001) begin
-						b_power = 1'b1;
-						end 
+							b_blue = 1'b0;
+							b_green = 1'b0;
+							b_red = 1'b0;
+							b_yellow = 1'b0;
+							b_power = 1'b1;
+						end else begin
+							b_blue = 1'b0;
+							b_green = 1'b0;
+							b_red = 1'b0;
+							b_yellow = 1'b0;
+							b_power = 1'b0;
+						end
 					end 
 					
 					S9: begin
+						color = counter_random;
+						buttons = buttons; 
 						rdy = 1'b1; 
+						b_blue = 1'b0;
+						b_green = 1'b0;
+						b_red = 1'b0;
+						b_yellow = 1'b0;
+						b_power = 1'b0;
 					end
 					
 					S10: begin
+						color = counter_random;
+						buttons = buttons; 
 						rdy = 1'b1; 
+						b_blue = 1'b0;
+						b_green = 1'b0;
+						b_red = 1'b0;
+						b_yellow = 1'b0;
+						b_power = 1'b0;
 					end
 					
 					S11: begin
+						color = counter_random;
+						buttons = buttons; 
 						rdy = 1'b1; 
+						b_blue = 1'b0;
+						b_green = 1'b0;
+						b_red = 1'b0;
+						b_yellow = 1'b0;
+						b_power = 1'b0;
+					end 
+					
+					default: begin				
+						color = counter_random;
+						buttons = buttons; 
+						rdy = 1'b0;
+						b_blue = 1'b0;
+						b_green = 1'b0;
+						b_red = 1'b0;
+						b_yellow = 1'b0;
+						b_power = 1'b0;
 					end
 					
 				endcase				
@@ -151,6 +245,11 @@ module controle_IR (rst, clk, irda, color, rdy, buttons, b_power, b_blue, b_yell
 			
 			
 			case (state)
+			
+				default: begin
+					next_state = START;
+				end
+				
 				START: begin
 					next_state = S0;
 				end 
@@ -168,7 +267,7 @@ module controle_IR (rst, clk, irda, color, rdy, buttons, b_power, b_blue, b_yell
 				end
 					
 				S2: begin
-					if (counter_buttons < 11) begin
+					if (counter_buttons < 193) begin
 						next_state = S2;
 					end else begin
 						next_state = S3;
@@ -180,7 +279,7 @@ module controle_IR (rst, clk, irda, color, rdy, buttons, b_power, b_blue, b_yell
 				end
 				
 				S4: begin
-					if (counter_buttons < 24) begin
+					if (counter_buttons < 234) begin
 						next_state = S4;
 					end else begin
 						next_state = S5;
@@ -192,7 +291,7 @@ module controle_IR (rst, clk, irda, color, rdy, buttons, b_power, b_blue, b_yell
 				end
 				
 				S6: begin
-					if (counter_buttons < 35) begin
+					if (counter_buttons < 254) begin
 						next_state = S6;
 					end else begin
 						next_state = S7;
