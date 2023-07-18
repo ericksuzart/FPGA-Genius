@@ -92,7 +92,7 @@ always @(*)
             estado_futuro = WIN;
       end
 
-      BLUE:
+      BLUE_STATE:
       begin
         if (VGA == BLUE && VGA_FLAG == 1)
             estado_futuro = BLUE_STATE;
@@ -100,7 +100,7 @@ always @(*)
             estado_futuro = POWER_ON;
       end
 
-      GREEN:
+      GREEN_STATE:
       begin
         if (VGA == GREEN && VGA_FLAG == 1)
             estado_futuro = GREEN_STATE;
@@ -108,7 +108,7 @@ always @(*)
             estado_futuro = POWER_ON;
       end
 
-      RED:
+      RED_STATE:
       begin
         if (VGA == RED && VGA_FLAG == 1)
             estado_futuro = RED_STATE;
@@ -116,7 +116,7 @@ always @(*)
             estado_futuro = POWER_ON;
       end
 
-      YELLOW:
+      YELLOW_STATE:
       begin
         if (VGA == YELLOW && VGA_FLAG == 1)
             estado_futuro = YELLOW_STATE;
@@ -140,7 +140,7 @@ always @(*)
             estado_futuro = ESPERAR;
       end
 
-      default: estado_futuro = ESPERAR;
+      default: estado_futuro = POWER_ON;
     endcase
   end
 
