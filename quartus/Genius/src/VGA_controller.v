@@ -74,36 +74,36 @@ parameter BLUE_Y =  190;
 // Green button ok
 parameter GREEN_HS = 168;
 parameter GREEN_VS = 168;
-parameter GREEN_X =  0;
-parameter GREEN_Y =  0;
+parameter GREEN_X =  1;
+parameter GREEN_Y =  1;
 
 // Red button ok
 parameter RED_HS = 168;
 parameter RED_VS = 168;
 parameter RED_X =  190;
-parameter RED_Y =  0;
+parameter RED_Y =  1;
 
 // Yellow button ok
 parameter YELLOW_HS = 168;
 parameter YELLOW_VS = 168;
-parameter YELLOW_X =  0;
+parameter YELLOW_X =  1;
 parameter YELLOW_Y =  190;
 
 // Lose button
 parameter LOSE_HS = 360;
 parameter LOSE_VS = 140;
-parameter LOSE_X =  0;
+parameter LOSE_X =  1;
 parameter LOSE_Y =  109;
 
 // Win button
 parameter WIN_HS = 360;
 parameter WIN_VS = 120;
-parameter WIN_X =  0;
+parameter WIN_X =  1;
 parameter WIN_Y =  119;
 
 // Power button ok
-parameter PWR_HS = 21;
-parameter PWR_VS = 21;
+parameter PWR_HS = 20;
+parameter PWR_VS = 20;
 parameter PWR_X =  169;
 parameter PWR_Y =  197;
 
