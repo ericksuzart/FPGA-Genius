@@ -6,7 +6,7 @@ module controle_IR_tb;
   wire buttons_tb;
   wire color_tb;
 
-  controle_IR uut (.clk(clk_tb), .rst(rst_tb), .irda(irda_tb), .rdy(rdy_tb), .buttons(buttons_tb), .color(color_tb));
+  controle_IR uut (.clk(clk_tb), .rst(rst_tb), .irda(irda_tb), .rdy(rdy_tb), .buttons(buttons_tb), .color(color_tb), .b_power(b_power_tb), .b_blue(b_blue_tb), .b_yellow(b_yellow_tb), .b_green(b_green_tb), .b_red(b_red_tb));
   
   integer i;
 

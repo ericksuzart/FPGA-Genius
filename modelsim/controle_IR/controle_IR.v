@@ -1,10 +1,10 @@
 `timescale 1ns/1ps
 
-module controle_IR (rst, clk, irda, color, rdy, buttons);
+module controle_IR (rst, clk, irda, color, rdy, buttons, b_power, b_blue, b_yellow, b_green, b_red);
 	input rst, clk, irda;
 	output reg [1:0] color; 
 	output reg [2:0] buttons;
-	output reg rdy;
+	output reg rdy, b_power, b_blue, b_yellow, b_green, b_red;
 
 	integer counter_buttons;
 	reg [7:0] counter_random;
@@ -85,6 +85,11 @@ module controle_IR (rst, clk, irda, color, rdy, buttons);
 						color = 2'b00;
 						buttons = 3'bxxx; 
 						rdy = 1'b0;
+						b_blue = 1'b0;
+						b_green = 1'b0;
+						b_red = 1'b0;
+						b_yellow = 1'b0;
+						b_power = 1'b0;
 					end
 
 					S0: begin			
@@ -104,8 +109,19 @@ module controle_IR (rst, clk, irda, color, rdy, buttons);
 					end
 					
 					S8: begin
-						rdy = 1'b1; 
-					end
+						rdy = 1'b1;
+						if (buttons == 3'b100) begin
+						b_blue = 1'b1;
+						end else if (buttons == 3'b011) begin
+						b_red = 1'b1;
+						end else if (buttons == 3'b110) begin
+						b_yellow = 1'b1;
+						end else if (buttons == 3'b010) begin
+						b_green = 1'b1;
+						end else if (buttons == 3'b001) begin
+						b_power = 1'b1;
+						end 
+					end 
 					
 					S9: begin
 						rdy = 1'b1; 
