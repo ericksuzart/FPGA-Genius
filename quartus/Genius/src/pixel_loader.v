@@ -97,22 +97,16 @@ module pixel_loader
 
       if (F_State == INICIO)
       begin
-        if (BLUE_EN)
-          blue_addr <= 0;
-        if (GREEN_EN)
-          green_addr <= 0;
-        if (RED_EN)
-          red_addr <= 0;
-        if (YELLOW_EN)
-          yellow_addr <= 0;
-        if (LOSE_EN)
-          lose_addr <= 0;
-        if (WIN_EN)
-          win_addr <= 0;
-        if (PWR_EN)
-          pwr_addr <= 0;
-        if (BACKGROUND_EN)
-          background_addr <= 0;
+        // it hapens only at end of the frame due to the combination nature of
+        // the r_addr assignment
+        blue_addr <= 0;
+        green_addr <= 0;
+        red_addr <= 0;
+        yellow_addr <= 0;
+        lose_addr <= 0;
+        win_addr <= 0;
+        pwr_addr <= 0;
+        background_addr <= 0;
       end
     end
   end
