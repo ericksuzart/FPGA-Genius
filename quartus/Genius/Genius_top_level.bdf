@@ -74,7 +74,7 @@ refer to the applicable agreement for further details.
 	(input)
 	(rect -832 -112 -664 -96)
 	(text "INPUT" (rect 125 0 158 10)(font "Arial" (font_size 6)))
-	(text "IRDA_RXD" (rect 5 0 65 11)(font "Arial" ))
+	(text "IRDA_RXD" (rect 5 0 64 11)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -208,7 +208,7 @@ refer to the applicable agreement for further details.
 )
 (pin
 	(output)
-	(rect 928 -128 1104 -112)
+	(rect 920 -312 1096 -296)
 	(text "OUTPUT" (rect 1 0 43 10)(font "Arial" (font_size 6)))
 	(text "LEDR[6..0]" (rect 90 0 152 11)(font "Arial" ))
 	(pt 0 8)
@@ -221,7 +221,7 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1104 -112 1160 -96))
+	(annotation_block (location)(rect 1096 -296 1152 -280))
 )
 (pin
 	(output)
@@ -255,6 +255,7 @@ refer to the applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
+	(annotation_block (location)(rect -40 -48 24 -32))
 )
 (symbol
 	(rect 312 -680 576 -568)
@@ -1764,11 +1765,6 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 752 -304)
-	(pt 688 -304)
-	(bus)
-)
-(connector
 	(pt 728 -584)
 	(pt 688 -584)
 	(bus)
@@ -1867,21 +1863,6 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 704 -776)
 	(pt 704 -848)
-)
-(connector
-	(pt 752 -304)
-	(pt 752 -120)
-	(bus)
-)
-(connector
-	(pt 736 -120)
-	(pt 752 -120)
-	(bus)
-)
-(connector
-	(pt 752 -120)
-	(pt 928 -120)
-	(bus)
 )
 (connector
 	(pt 232 -776)
@@ -2007,6 +1988,16 @@ refer to the applicable agreement for further details.
 	(pt -224 -136)
 	(pt 96 -136)
 )
+(connector
+	(pt 528 -304)
+	(pt 688 -304)
+	(bus)
+)
+(connector
+	(pt 688 -304)
+	(pt 920 -304)
+	(bus)
+)
 (junction (pt -152 -680))
 (junction (pt 416 -696))
 (junction (pt -216 -680))
@@ -2016,8 +2007,8 @@ refer to the applicable agreement for further details.
 (junction (pt -336 96))
 (junction (pt -184 -832))
 (junction (pt 704 -776))
-(junction (pt 752 -120))
 (junction (pt 184 -584))
 (junction (pt -264 -168))
 (junction (pt -232 -120))
 (junction (pt -224 -136))
+(junction (pt 688 -304))
