@@ -17,6 +17,7 @@ module genius_tb;
   wire [1:0] VGA;
   wire [3:0] state;
   wire [3:0] nextState;
+  wire [6:0] SPRITES_FLAGS;
 
   parameter[2:0] 
     POWER = 1,
@@ -26,6 +27,7 @@ module genius_tb;
     YELLOW = 6;
   
   genius DUV (.RESET(RESET), .R(R), .CLK(CLK), .B(B), .C(C), .END_1(END_1), .END_2(END_2), .START_1(START_1), .START_2(START_2), .VGA_FLAG(VGA_FLAG), .VGA_LOSE(VGA_LOSE), .VGA_WIN(VGA_WIN), .estado_atual(state), .estado_futuro(nextState), .VGA(VGA));
+  genius_vga DUV2 ( .VGA_FLAG(VGA_FLAG), .VGA_LOSE(VGA_LOSE), .VGA_WIN(VGA_WIN), .VGA(VGA), .B(B), .RESET(RESET), .SPRITES_FLAGS(SPRITES_FLAGS));
   
   initial begin
     $dumpfile("GENIUS.vcd");
@@ -57,7 +59,7 @@ module genius_tb;
     toggle_clk;
     toggle_clk;
     toggle_clk;
-    toggle_GREEN;
+    toggle_RED;
     toggle_clk;
     toggle_END_1;
     toggle_clk;

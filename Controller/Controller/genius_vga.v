@@ -30,8 +30,12 @@ parameter
     RED = 2'b10,
     YELLOW = 2'b11;
 
+initial
+begin
+  SPRITES_FLAGS = 7'b0000000;
+end
 
-always @(VGA or VGA_FLAG or VGA_LOSE or VGA_WIN or RESET or B)
+always @(*)
   begin
     if (RESET)
     begin
@@ -54,7 +58,7 @@ always @(VGA or VGA_FLAG or VGA_LOSE or VGA_WIN or RESET or B)
       begin
         if (VGA_FLAG == 0 && VGA_LOSE == 0 && VGA_WIN == 0)
             estado_futuro = ESPERAR;
-        else if (B == 1)
+        if (B == 1)
             estado_futuro = POWER_ON;
         else if (VGA == BLUE && VGA_FLAG == 1)
             estado_futuro = BLUE_STATE;
@@ -124,7 +128,7 @@ always @(VGA or VGA_FLAG or VGA_LOSE or VGA_WIN or RESET or B)
       begin
         if (VGA_LOSE == 1)
             estado_futuro = LOSE;
-        else if (VGA_LOSE == 1)
+        else if (VGA_LOSE == 0)
             estado_futuro = ESPERAR;
       end
 
@@ -135,6 +139,8 @@ always @(VGA or VGA_FLAG or VGA_LOSE or VGA_WIN or RESET or B)
         else if (VGA_WIN == 0)
             estado_futuro = ESPERAR;
       end
+
+      default: estado_futuro = ESPERAR;
     endcase
   end
 
@@ -156,22 +162,22 @@ always @(VGA or VGA_FLAG or VGA_LOSE or VGA_WIN or RESET or B)
         SPRITES_FLAGS = 7'b0000001;
       end
 
-      BLUE:
+      BLUE_STATE:
       begin
         SPRITES_FLAGS = 7'b1000001;
       end
 
-      GREEN:
+      GREEN_STATE:
       begin
         SPRITES_FLAGS = 7'b0100001;
       end
 
-      RED:
+      RED_STATE:
       begin
         SPRITES_FLAGS = 7'b0010001;
       end
 
-      YELLOW:
+      YELLOW_STATE:
       begin
         SPRITES_FLAGS = 7'b0001001;
       end
@@ -185,6 +191,8 @@ always @(VGA or VGA_FLAG or VGA_LOSE or VGA_WIN or RESET or B)
       begin
         SPRITES_FLAGS = 7'b0000010;
       end
+
+      default: SPRITES_FLAGS = 7'b0000000;
     endcase
   end
 
